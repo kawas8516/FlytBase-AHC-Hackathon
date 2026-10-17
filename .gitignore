@@ -1,9 +1,29 @@
-.venv/
+# secrets and local config
 .env
+.env.*
+!.env.example
+
+# python
+.venv/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# node (web app, and the docx builder's dependency at the root)
 node_modules/
 web/dist/
-data/*.db
-data/*.sqlite
+package-lock.json
+
+# generated at runtime: databases, LLM call logs, server logs, scratch run outputs
+data/
+
+# demo video build intermediates (regenerate with scripts/make_video.py); the final mp4 is kept
+docs/demo/raw/
+docs/demo/*.mp3
+docs/demo/audio/
+
+# local tooling and personal files
+.claude/
+.impeccable/
+docs/portal/
+*.log

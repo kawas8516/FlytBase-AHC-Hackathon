@@ -19,12 +19,17 @@ OPS = {
     "downtime": "Days not producing (7 per non-producing weekly inspection), per well, ranked. params: wells|area|well_type, period, top",
     "spills": "List/count/total barrels of real oil spills. params: wells|area, period. Use viz=map for 'where'/'on a map'",
     "spill_heatmap": "Spills by area x month for a year. params: year",
-    "repairs": "Repairs and their cost. params: wells|area, period, equipment, maintenance_type",
+    "repairs": "Total repair cost PER WELL for given wells or an area. NOT for grouping by technician, contractor or equipment (use sql). params: wells|area, period, equipment, maintenance_type",
     "rca_due": "Wells that need a root-cause analysis (repeated corrective repairs on the same equipment). params: area|wells|well_type, equipment",
     "compliance_audit": "Which rules/SOPs a well broke, fines, what is still open. params: wells[1], period",
     "spills_check": "Spills that broke or needed a protocol: SR-02 containment time limit, SR-01 regulator report. params: area|wells, period, protocol",
     "spill_verdict": "Was a specific detected spill real oil; disagreements about it. params: wells[1], date",
     "planned_downtime": "Planned/upcoming shut-ins or downtime for a well. params: wells[1]",
+    "regulator_events": "Regulator events, fines, notices of violation, site visits. params: area|wells|well_type, period, fines_only(bool), event_type",
+    "repair_list": "List individual repairs with cost and root cause (latest N, or by period/equipment). params: wells|area, period, equipment, maintenance_type, top(latest N)",
+    "list_wells": "List/count/locate wells in an area or of a type (where are the wells, how many wells). params: area|well_type",
+    "downtime_by_area": "Downtime totals per geographic area (compare areas). params: period",
+    "sql": "Anything else that needs counting/grouping over wells, inspections, maintenance, reg_events, notes (e.g. by technician, by contractor). params: query = the question",
     "search_docs": "Question about rules, manuals, SOPs, procedures or report text with no computation. params: query",
 }
 
@@ -104,11 +109,25 @@ def pre_extract(q: str, d: Data) -> dict:
     m = re.search(r"(?:last|past|previous)\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten|twelve)?\s*(day|week|month|year)s?", ql)
     if m:
         out["period"] = {"last": _num_word(m.group(1)) if m.group(1) else 1, "unit": m.group(2) + "s"}
-    m = re.search(r"\bin (20\d\d)\b|\bof (20\d\d)\b|\b(20\d\d) spills\b", ql)
-    if m and "period" not in out:
-        out["period"] = {"year": int(next(g for g in m.groups() if g))}
+    m = re.search(r"\b(20[12]\d)\b", ql)
+    if m and "period" not in out and not re.search(r"\b\d{1,2}\s+[a-z]{3,9}\s+20[12]\d\b", ql):
+        out["period"] = {"year": int(m.group(1))}
     if re.search(r"\bthis year\b", ql):
         out["period"] = {"from": f"{d.today.year}-01-01", "to": d.today.isoformat()}
+    if re.search(r"\bthis summer\b", ql):
+        out["period"] = {"from": f"{d.today.year}-06-01", "to": min(d.today, date(d.today.year, 8, 31)).isoformat()}
+    if re.search(r"\blast summer\b", ql):
+        out["period"] = {"from": f"{d.today.year - 1}-06-01", "to": f"{d.today.year - 1}-08-31"}
+    if re.search(r"\blast year\b", ql):
+        out["period"] = {"year": d.today.year - 1}
+    if re.search(r"\bthis month\b", ql):
+        out["period"] = {"from": d.today.replace(day=1).isoformat(), "to": d.today.isoformat()}
+    m = re.search(r"\bsince (\d{1,2} [a-z]{3,9}(?: 20\d\d)?)", ql)
+    if m:
+        from .feedback import parse_date
+        sd = parse_date(m.group(1), d.today)
+        if sd:
+            out["period"] = {"from": sd.isoformat(), "to": d.today.isoformat()}
     m = re.search(r"\b(?:top|which)\s+(\d+|three|five|ten)\b", ql)
     if m:
         out["top"] = _num_word(m.group(1))
@@ -162,7 +181,9 @@ def plan(question: str, d: Data, use_llm=True) -> dict:
             s["area"] = pre["area"]
         if pre.get("period") and s["op"] not in ("well_status", "wells_status", "planned_downtime", "spill_heatmap"):
             s["period"] = pre["period"]
-        if pre.get("top") and s["op"] in ("downtime", "repairs", "spills"):
+        if pre.get("well_type") and not s.get("well_type") and s["op"] in ("wells_status", "downtime", "rca_due", "spills", "regulator_events"):
+            s["well_type"] = pre["well_type"]
+        if pre.get("top") and s["op"] in ("downtime", "repairs", "spills", "repair_list"):
             s["top"] = pre["top"]
         if s["op"] == "spill_heatmap" and not s.get("year"):
             per = s.get("period") or pre.get("period") or {}
@@ -171,41 +192,55 @@ def plan(question: str, d: Data, use_llm=True) -> dict:
 
 
 def fallback_plan(q: str, pre: dict) -> dict:
-    """Keyword router used when the LLM is unavailable. Covers the common question shapes."""
+    """Keyword router. Sets _confident=False when it is only guessing, so the caller can ask the LLM planner."""
     ql = q.lower()
     wells = pre.get("wells", [])
-    st = {"wells": wells, "area": pre.get("area"), "period": pre.get("period"), "top": pre.get("top")}
-    if re.search(r"heatmap|by (?:geographic )?area and month", ql):
+    st = {"wells": wells, "area": pre.get("area"), "well_type": pre.get("well_type"), "period": pre.get("period"), "top": pre.get("top")}
+    conf = True
+    if re.search(r"\b(manual|sop|procedure|policy|standard|protocol|what does .* say|limit for|threshold|deadline)\b", ql) and not wells:
+        op = "search_docs"; st["query"] = q
+    elif re.search(r"heatmap|by (?:geographic )?area and month", ql):
         op = "spill_heatmap"
-    elif re.search(r"root.cause|\brca\b", ql):
-        op = "rca_due"; st["equipment"] = "pump_jack" if "pump jack" in ql else ("flowline" if "flowline" in ql else None)
-    elif re.search(r"rules? .*broken|breach|violat|compliance|still open", ql):
+    elif re.search(r"root.cause analysis|\brca\b", ql):
+        op = "rca_due"; st["equipment"] = next((v for k, v in {"pump jack": "pump_jack", "flowline": "flowline", "rod string": "rod_string", "downhole pump": "downhole_pump"}.items() if k in ql), None)
+    elif re.search(r"\bfines?\b|notices? of violation|\bnov\b|site (?:visit|inspection)|regulator events?", ql):
+        op = "regulator_events"; st["fines_only"] = bool(re.search(r"fine", ql))
+    elif re.search(r"rules? .*(?:broken|violated)|breach|violat|complian|still open", ql) and wells:
         op = "compliance_audit"
     elif re.search(r"contain", ql):
         op = "spills_check"; st["protocol"] = "SR-02"
-    elif re.search(r"report(?:ed)? to the regulator|needed a report|reportable", ql):
+    elif re.search(r"report(?:ed)? to the regulator|needed a report|reportable|written notice", ql):
         op = "spills_check"; st["protocol"] = "SR-01"
-    elif re.search(r"real oil|was the .* spill", ql):
+    elif re.search(r"real oil|was the .* spill|spill .* real", ql):
         op = "spill_verdict"
-        m = re.search(r"(\d{1,2}) (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)", ql)
-        if m:
-            st["date"] = str(pd.Timestamp(f"{m.group(1)} {m.group(2)} {pre.get('year', 2026)}").date())
+        from .feedback import parse_date
+        dt = parse_date(q, date(2026, 10, 17))
+        if dt:
+            st["date"] = str(dt)
+    elif re.search(r"(last|latest|recent) repairs?|repair history|root cause of|what did .* repair|list .* repairs?|which repairs", ql):
+        op = "repair_list"; st["top"] = st.get("top") or (1 if re.search(r"\b(last|latest) repair\b", ql) else None)
+    elif re.search(r"where (?:are|is)|locat|how many wells|list (?:all )?(?:the )?wells|which wells (?:are|do we have) in|wells in", ql) and not re.search(r"produc|down|shut|spill|repair|cost|rca|root", ql):
+        op = "list_wells"
+    elif re.search(r"cost|repair|spent|spend", ql):
+        op = "repairs"
     elif re.search(r"spill", ql):
         op = "spills"
     elif re.search(r"planned|upcoming|scheduled shut", ql) and wells:
         op = "planned_downtime"
-    elif re.search(r"down|downtime", ql) and re.search(r"how many days|most|longest|downtime", ql):
+    elif re.search(r"(compare|across|each|per|every) (?:all )?(?:the )?(?:four )?areas?|by area", ql) and re.search(r"down", ql):
+        op = "downtime_by_area"
+    elif re.search(r"down|downtime", ql) and re.search(r"how many days|most|longest|downtime|how long", ql):
         op = "downtime"
-    elif re.search(r"cost|repair", ql):
-        op = "repairs"
-    elif re.search(r"temperature|line chart|over time", ql):
-        op = "series"
-    elif re.search(r"planned", ql):
+    elif re.search(r"planned|upcoming|scheduled shut", ql) and wells:
         op = "planned_downtime"
+    elif re.search(r"temperature|line chart|over time", ql) and len(wells) == 1:
+        op = "series"
     elif wells and len(wells) == 1:
         op = "well_status"
-    elif re.search(r"not producing|producing", ql):
+    elif re.search(r"not producing|not running|shut in|offline|stopped|down right now|isn't producing", ql):
         op = "wells_status"; st["producing"] = False
     else:
-        op = "search_docs"; st["query"] = q
-    return {"intent": "query", "steps": [{"op": op, **st}], "_router": "keywords"}
+        op = "search_docs"; st["query"] = q; conf = False
+    if op in ("well_status", "wells_status") and not re.search(r"producing|running|status|right now|shut|online|stopped|down", ql):
+        conf = False
+    return {"intent": "query", "steps": [{"op": op, **st}], "_router": "keywords", "_confident": conf}

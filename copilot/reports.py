@@ -31,6 +31,19 @@ def extract(text: str) -> dict:
     m = re.search(r"\((minor|moderate|reportable|major) class\)", flat, re.I) or \
         re.search(r"(minor|moderate|reportable|major) spill", flat, re.I)
     out["spill_class_stated"] = m.group(1).lower() if m else None
+    m = re.search(r"Parts installed:\s*(.+?)(?:\n|$)", text.replace("*", ""))
+    if m:
+        line = m.group(1).strip()
+        out["parts_installed"] = line
+        lm = re.search(r"\blot\s+([A-Z0-9-]+)", line, re.I)
+        sm = re.search(r"\bserial\s+([A-Z0-9-]+)", line, re.I)
+        mm = re.match(r"(.+?)\s+pump", line, re.I)
+        out["pump_lot"] = lm.group(1) if lm else None
+        out["pump_serial"] = sm.group(1) if sm else None
+        out["pump_model"] = mm.group(1).strip() if mm else line.split(",")[0]
+    m = re.search(r"Follow-up:\s*(.+?)(?:\n|$)", text.replace("*", ""))
+    out["follow_up"] = m.group(1).strip() if m else None
+    out["soil_samples_lab"] = "soil samples sent to the lab" in flat.lower()
     out["reporting_duty_stated"] = any(c["protocol"] == "SR-01" for c in out["compliance"])
     m = re.search(r"## Root cause\s+(.+?)(?:\n## |\Z)", text, re.S)
     out["root_cause"] = _flat(m.group(1)).strip() if m else None

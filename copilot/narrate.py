@@ -10,7 +10,30 @@ def _list(xs):
     return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1] if xs else ""
 
 
-def summarize(r: Result, scope: str = "") -> str:
+ROW_OPS = {"gas_response", "bypasses", "letter_compliance", "status_disagreements", "recalled_pumps", "recalled_followup", "listen_ranking", "waiting_reasons", "priority", "freeze_checks", "list_wells", "regulator_events", "repair_list", "downtime_by_area", "sql", "wells_status", "spills", "rca_due", "compliance_audit", "spills_check", "repairs", "downtime", "planned_downtime"}
+
+
+def summarize(r: Result, brief: bool = False) -> str:
+    try:
+        out = _summarize(r, brief)
+    except Exception:  # noqa: BLE001  never let a formatting error hide an answer
+        out = f"**{r.title}.**" + "".join(f"\n- {n}" for n in r.notes)
+    if brief and r.op in ("correction", "rule_override", "statement"):
+        keep = [ln for ln in out.split("\n") if not (ln.startswith("- Ledger id") or ln.startswith("- **Conflict")
+                or ln.startswith("- **People disagree") or ln.startswith("  - "))]
+        return "\n".join(keep)
+    if not brief or r.op not in ROW_OPS or r.op in GENERIC or r.viz.get("type") in (None, "text", "card", "receipt"):
+        return out
+    keep = [ln for ln in out.split("\n") if not ln.startswith("- ") or "corrected" in ln or "no longer listed" in ln or "Where nothing" in ln
+            or "Next is" in ln or "Window" in ln or "Reportable means" in ln or "based on" in ln or "because of" in ln]
+    return "\n".join(keep)
+
+
+GENERIC = {"gas_response", "bypasses", "letter_compliance", "status_disagreements", "recalled_pumps", "recalled_followup", "listen_ranking",
+           "waiting_reasons", "priority", "data_gap", "team_info", "freeze_checks", "h2s_reading", "temp_by_area"}
+
+
+def _summarize(r: Result, brief: bool = False) -> str:
     f = r.facts
     op = r.op
     out = []
@@ -43,6 +66,9 @@ def summarize(r: Result, scope: str = "") -> str:
                 out.append(f"- Not-producing inspections: {x['Not-producing inspections'] or 'none'}")
         else:
             out.append("**" + "; ".join(f"{w}: {dd} days" for w, dd in rk) + "**")
+            for x in r.rows:
+                if x.get("Why"):
+                    out.append(f"- {x['Well']} ({x['Downtime days']} days): {x['Why']}")
             if f.get("next"):
                 out.append(f"- Next is {f['next']['Well']} at {f['next']['days']} days.")
         if f.get("window") and f["window"][0] != "None":
@@ -56,7 +82,8 @@ def summarize(r: Result, scope: str = "") -> str:
     elif op == "spill_heatmap":
         out.append("**" + "; ".join(f"{a}: {t}" for a, t in f["totals"].items()) + "** (corrected detections removed).")
     elif op == "repairs":
-        out.append("**" + " · ".join(f"{w}: USD {c:,.0f}" for w, c in f["costs"].items()) + "**")
+        if f.get("costs"):
+            out.append("**" + " · ".join(f"{w}: USD {c:,.0f}" for w, c in f["costs"].items()) + "**")
     elif op == "rca_due":
         out.append(f"**{_list(f['wells']) or 'No wells'}{' need' if f['wells'] else ' need'} a root-cause analysis.**")
         for x in r.rows:
@@ -81,6 +108,20 @@ def summarize(r: Result, scope: str = "") -> str:
         out.append(f"**{r.title}.**")
         for x in r.rows:
             out.append("- " + "; ".join(f"{k}: {v}" for k, v in x.items()))
+    elif op == "regulator_events":
+        out.append(f"**{f['count']} regulator event{'s' if f['count'] != 1 else ''}; fines USD {f['fines_usd']:,.0f} (open USD {f['open_fines_usd']:,.0f}).**")
+        for x in r.rows[:20]:
+            out.append(f"- {x['Date']} {x['Well']} {x['Type']} {x['Protocol']}: USD {x['Fine USD']:,.0f}, {x['Status']}. {x['Detail']}")
+    elif op == "repair_list":
+        out.append(f"**{f['count']} repair{'s' if f['count'] != 1 else ''}, USD {f['total_usd']:,.0f} in total.**")
+        for x in r.rows[:20]:
+            out.append(f"- {x['Repair']} ({x['Started']}, {x['Equipment']}, {x['Type']}): {x['Issue']}; USD {x['Cost USD']:,.0f}" + (f"; root cause: {x['Root cause']}" if x["Root cause"] else ""))
+    elif op == "downtime_by_area":
+        out.append("**" + "; ".join(f"{a}: {v} days" for a, v in f["by_area"].items()) + "**")
+    elif op == "list_wells":
+        out.append(f"**{f['count']} wells** (" + ", ".join(f"{n} {t}" for t, n in f["by_type"].items()) + ").")
+    elif op == "sql":
+        out.append(f"**{len(r.rows)} row{'s' if len(r.rows) != 1 else ''}** from a read-only query.")
     elif op == "search_docs":
         for x in r.rows[:4]:
             out.append(f"- **{x['ref']}**: {x['text'][:400]}")
@@ -95,6 +136,24 @@ def summarize(r: Result, scope: str = "") -> str:
             if c.get("also_disagrees"):
                 out.append(f"  - Also disagrees: {_list(c['also_disagrees'])}")
             out.append(f"  - {c['ask']}")
+    if r.op in GENERIC and not out:
+        head = {"gas_response": lambda: f"**{f['reports']} gas reports; {f['met']} met the response deadline, {f['missed']} missed.**",
+                "bypasses": lambda: f"**{len(f['in_place_now'])} bypasses in place now; {len(f['violations'])} violations (past or present).**",
+                "letter_compliance": lambda: f"**{f['covered']} spills covered by the letter; {len(f['not_compliant'])} not compliant" + (": " + _list(f['not_compliant']) if f['not_compliant'] else "") + ".**",
+                "status_disagreements": lambda: f"**{f['count']} wells where the latest inspection and operator notes disagree.**",
+                "recalled_pumps": lambda: f"**{f['count']} recalled pumps still in the ground.**",
+                "recalled_followup": lambda: f"**{len(r.rows)} of those wells are not producing.**",
+                "listen_ranking": lambda: f"**Top {len(r.rows)} wells most likely to need a repair.**",
+                "waiting_reasons": lambda: f"**Reasons shut-ins outlast the repair, by area.**",
+                "temp_by_area": lambda: f"**{f['hottest']} runs hottest.**",
+                "freeze_checks": lambda: f"**{f['misses']} missed heat-trace checks in December.**"}.get(r.op)
+        if head:
+            out.append(head())
+        elif r.op not in ("data_gap", "team_info", "h2s_reading"):
+            out.append(f"**{r.title}.**")
+        if not brief and r.op != "data_gap":
+            for x in r.rows[:30]:
+                out.append("- " + "; ".join(f"{k}: {v}" for k, v in x.items() if k not in ("lat", "lon", "In place now", "notes_n")))
     corrected = [n for n in r.notes if n.endswith("it does not count.")]
     for n in r.notes:
         if len(corrected) > 3 and n in corrected:

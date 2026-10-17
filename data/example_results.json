@@ -7,6 +7,7 @@
   },
   "answer": {
    "text": "**No, WELL-0001 is not producing oil right now.**\n- Latest inspection INS-0001-0203 on 15 Oct 2026, by drone, by Ryan Brooks.\n- The wellhead was 3.2 \u00b0C warmer than the air (25.6 vs 22.4 \u00b0C); the T200 limit is 15 \u00b0C, so it is below the limit.\n- Reason: Note CTX-0001-003 by Jake Morales: Well shut in from 7 Oct for planned rod string replacement. Work order not yet in the maintenance system. Expected back online around 20 Oct.\n- Inspector's remark: \"Pump jack not moving.\"\n- The recorded status still says active, which is out of date.",
+   "full_text": "**No, WELL-0001 is not producing oil right now.**\n- Latest inspection INS-0001-0203 on 15 Oct 2026, by drone, by Ryan Brooks.\n- The wellhead was 3.2 \u00b0C warmer than the air (25.6 vs 22.4 \u00b0C); the T200 limit is 15 \u00b0C, so it is below the limit.\n- Reason: Note CTX-0001-003 by Jake Morales: Well shut in from 7 Oct for planned rod string replacement. Work order not yet in the maintenance system. Expected back online around 20 Oct.\n- Inspector's remark: \"Pump jack not moving.\"\n- The recorded status still says active, which is out of date.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -83,7 +84,7 @@
         "section": "9.3 Production temperature rule",
         "quote": "sidered producing (active) when its wellhead temperature is at least 15 \u00b0C above ambient air temperature at the time of the reading. A difference below 15 \u00b0C means the",
         "value": 15.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -96,9 +97,9 @@
      "notes": []
     }
    ],
-   "ms": 1043
+   "ms": 791
   },
-  "secs": 1.047980785369873
+  "secs": 0.796405553817749
  },
  {
   "item": {
@@ -107,7 +108,8 @@
    "question": "Which wells in Northeast Block 8 are not producing oil right now, and why? Show them in a table."
   },
   "answer": {
-   "text": "**4 wells not producing in Northeast Block 8.** (WELL-0164, WELL-0170, WELL-0172 and WELL-0175)\n- WELL-0164: 4.1 \u00b0C above air, recorded status active (out of date). No recorded reason. The inspector noted \"Pump jack not moving.\".\n- WELL-0170: 2.9 \u00b0C above air, recorded status down. Repair MNT-0170-031, pump jack walking beam bearing wear, started 19 Sep 2026, still open.\n- WELL-0172: 5.7 \u00b0C above air, recorded status active (out of date). Repair MNT-0172-028, flowline corrosion pinhole leak, started 3 Oct 2026, still open (inspector: \"No stroke observed during flight.\").\n- WELL-0175: 0.4 \u00b0C above air, recorded status active (out of date). No recorded reason.\n- Where nothing explains the stop, check the pump jack and prime mover on site; no cause is invented.",
+   "text": "**4 wells not producing in Northeast Block 8.** (WELL-0164, WELL-0170, WELL-0172 and WELL-0175)\n- Where nothing explains the stop, check the pump jack and prime mover on site; no cause is invented.",
+   "full_text": "**4 wells not producing in Northeast Block 8.** (WELL-0164, WELL-0170, WELL-0172 and WELL-0175)\n- WELL-0164: 4.1 \u00b0C above air, recorded status active (out of date). No recorded reason. The inspector noted \"Pump jack not moving.\".\n- WELL-0170: 2.9 \u00b0C above air, recorded status down. Repair MNT-0170-031, pump jack walking beam bearing wear, started 19 Sep 2026, still open.\n- WELL-0172: 5.7 \u00b0C above air, recorded status active (out of date). Repair MNT-0172-028, flowline corrosion pinhole leak, started 3 Oct 2026, still open (inspector: \"No stroke observed during flight.\").\n- WELL-0175: 0.4 \u00b0C above air, recorded status active (out of date). No recorded reason.\n- Where nothing explains the stop, check the pump jack and prime mover on site; no cause is invented.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -218,7 +220,7 @@
         "section": "9.3 Production temperature rule",
         "quote": "sidered producing (active) when its wellhead temperature is at least 15 \u00b0C above ambient air temperature at the time of the reading. A difference below 15 \u00b0C means the",
         "value": 15.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -237,9 +239,9 @@
      ]
     }
    ],
-   "ms": 59
+   "ms": 62
   },
-  "secs": 0.06488537788391113
+  "secs": 0.06729388236999512
  },
  {
   "item": {
@@ -249,6 +251,7 @@
   },
   "answer": {
    "text": "**13 readings from 23 Jul 2026 to 15 Oct 2026.** Not producing oil on 8 Oct 2026 and 15 Oct 2026.",
+   "full_text": "**13 readings from 23 Jul 2026 to 15 Oct 2026.** Not producing oil on 8 Oct 2026 and 15 Oct 2026.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -483,7 +486,7 @@
         "section": "9.3 Production temperature rule",
         "quote": "sidered producing (active) when its wellhead temperature is at least 15 \u00b0C above ambient air temperature at the time of the reading. A difference below 15 \u00b0C means the",
         "value": 15.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -502,7 +505,7 @@
    ],
    "ms": 13
   },
-  "secs": 0.018811702728271484
+  "secs": 0.0180509090423584
  },
  {
   "item": {
@@ -511,7 +514,8 @@
    "question": "How many oil spills has WELL-0001 had in the last 4 years, and how much oil in total? List them in a table."
   },
   "answer": {
-   "text": "**6 spills, 15.1 barrels in total.**\n- There were 7 detections; 1 corrected as not a spill and excluded.\n- WELL-0001 16 Mar 2023: 0.5 bbl (minor)\n- WELL-0001 27 Apr 2023: 2.6 bbl (moderate)\n- WELL-0001 28 Sep 2023: 3.3 bbl (moderate)\n- WELL-0001 19 Oct 2023: 0.3 bbl (minor)\n- WELL-0001 11 Jun 2026: 6.8 bbl (reportable)\n- WELL-0001 1 Oct 2026: 1.6 bbl (moderate)\n- INS-0001-0070 (7 Mar 2024) was a detection corrected as not a spill by note CTX-0001-001; it does not count.",
+   "text": "**6 spills, 15.1 barrels in total.**\n- There were 7 detections; 1 corrected as not a spill and excluded.\n- INS-0001-0070 (7 Mar 2024) was a detection corrected as not a spill by note CTX-0001-001; it does not count.",
+   "full_text": "**6 spills, 15.1 barrels in total.**\n- There were 7 detections; 1 corrected as not a spill and excluded.\n- WELL-0001 16 Mar 2023: 0.5 bbl (minor)\n- WELL-0001 27 Apr 2023: 2.6 bbl (moderate)\n- WELL-0001 28 Sep 2023: 3.3 bbl (moderate)\n- WELL-0001 19 Oct 2023: 0.3 bbl (minor)\n- WELL-0001 11 Jun 2026: 6.8 bbl (reportable)\n- WELL-0001 1 Oct 2026: 1.6 bbl (moderate)\n- INS-0001-0070 (7 Mar 2024) was a detection corrected as not a spill by note CTX-0001-001; it does not count.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -691,9 +695,9 @@
      ]
     }
    ],
-   "ms": 17
+   "ms": 15
   },
-  "secs": 0.024004459381103516
+  "secs": 0.0223848819732666
  },
  {
   "item": {
@@ -702,7 +706,8 @@
    "question": "How many days was WELL-0001 down in 2025?"
   },
   "answer": {
-   "text": "**WELL-0001 was down 21 days** (3 weekly inspections found it not producing oil).\n- Not-producing inspections: INS-0001-0140, INS-0001-0152, INS-0001-0153\n- Window: 2025-01-01 to 2025-12-31.",
+   "text": "**WELL-0001 was down 21 days** (3 weekly inspections found it not producing oil).\n- Window: 2025-01-01 to 2025-12-31.",
+   "full_text": "**WELL-0001 was down 21 days** (3 weekly inspections found it not producing oil).\n- Not-producing inspections: INS-0001-0140, INS-0001-0152, INS-0001-0153\n- Window: 2025-01-01 to 2025-12-31.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -784,7 +789,7 @@
         "section": "9.3 Production temperature rule",
         "quote": "sidered producing (active) when its wellhead temperature is at least 15 \u00b0C above ambient air temperature at the time of the reading. A difference below 15 \u00b0C means the",
         "value": 15.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -804,9 +809,9 @@
      "notes": []
     }
    ],
-   "ms": 16
+   "ms": 14
   },
-  "secs": 0.020728111267089844
+  "secs": 0.0188906192779541
  },
  {
   "item": {
@@ -815,7 +820,8 @@
    "question": "Show on a map every well in Northeast Block 8 with a real spill in the last 90 days."
   },
   "answer": {
-   "text": "**4 spills, 10.2 barrels in total.**\n- There were 6 detections; 2 corrected as not a spill and excluded.\n- WELL-0151 24 Sep 2026: 4.5 bbl (moderate)\n- WELL-0165 30 Jul 2026: 1.2 bbl (moderate)\n- WELL-0175 30 Jul 2026: 3.9 bbl (moderate)\n- WELL-0186 23 Jul 2026: 0.6 bbl (minor)\n- INS-0194-0192 (23 Jul 2026) was a detection corrected as not a spill by note CTX-0194-002; it does not count.\n- INS-0199-0200 (10 Sep 2026) was a detection corrected as not a spill by note CTX-0199-002; it does not count.",
+   "text": "**4 spills, 10.2 barrels in total.**\n- There were 6 detections; 2 corrected as not a spill and excluded.\n- INS-0194-0192 (23 Jul 2026) was a detection corrected as not a spill by note CTX-0194-002; it does not count.\n- INS-0199-0200 (10 Sep 2026) was a detection corrected as not a spill by note CTX-0199-002; it does not count.",
+   "full_text": "**4 spills, 10.2 barrels in total.**\n- There were 6 detections; 2 corrected as not a spill and excluded.\n- WELL-0151 24 Sep 2026: 4.5 bbl (moderate)\n- WELL-0165 30 Jul 2026: 1.2 bbl (moderate)\n- WELL-0175 30 Jul 2026: 3.9 bbl (moderate)\n- WELL-0186 23 Jul 2026: 0.6 bbl (minor)\n- INS-0194-0192 (23 Jul 2026) was a detection corrected as not a spill by note CTX-0194-002; it does not count.\n- INS-0199-0200 (10 Sep 2026) was a detection corrected as not a spill by note CTX-0199-002; it does not count.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -969,9 +975,9 @@
      ]
     }
    ],
-   "ms": 13
+   "ms": 14
   },
-  "secs": 0.01728963851928711
+  "secs": 0.019828319549560547
  },
  {
   "item": {
@@ -981,6 +987,7 @@
   },
   "answer": {
    "text": "**Northeast Block 7: 37; Northeast Block 8: 26; Southwest Block 23: 35; Southwest Block 24: 43** (corrected detections removed).\n- 17 detections in this period were corrected as not a spill (rain, shadow, produced water) and excluded.",
+   "full_text": "**Northeast Block 7: 37; Northeast Block 8: 26; Southwest Block 23: 35; Southwest Block 24: 43** (corrected detections removed).\n- 17 detections in this period were corrected as not a spill (rain, shadow, produced water) and excluded.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -2006,9 +2013,9 @@
      ]
     }
    ],
-   "ms": 27
+   "ms": 30
   },
-  "secs": 0.033756256103515625
+  "secs": 0.035080909729003906
  },
  {
   "item": {
@@ -2017,7 +2024,8 @@
    "question": "Which rules has WELL-0001 broken in the last 12 months, and what is still open?"
   },
   "answer": {
-   "text": "**4 breaches; USD 5,000 in fines, still open.**\n- [Breach] SR-01: Written report filed after 41 hours (REG-0001-001), limit 24 hours\n- [Breach] SR-02: Contained after about 7 hours (limit 4); found only in report MNT-0001-029\n- [Breach] SR-03: Clean-up verification due by 10 Aug 2026, still open\n- [Breach] RC-04: Notice REG-0001-002 needed a response by 30 Jul 2026; none recorded\n- [Fine] SR-01: Notice of violation REG-0001-002: USD 5,000 fine, open\n- [Pending] Manual \u00a710 RCA: Root-cause analysis due on the flowline: 3 corrective repairs in 12 months (MNT-0001-028, MNT-0001-029, MNT-0001-032); the report for MNT-0001-032 marks it as \"Action required\"\n- [Pending] T200 manual \u00a74: Planned shut-in from 7 Oct 2026 not yet recorded in the maintenance system, required before work starts (note CTX-0001-003)\n- [Met] SR-02: Contained after about 1.7 hours (limit 4); found only in report MNT-0001-032\n- [Met] RC-02: Yearly flowline test done on 7 Mar 2026 (MNT-0001-026)",
+   "text": "**4 breaches; USD 5,000 in fines, still open.**",
+   "full_text": "**4 breaches; USD 5,000 in fines, still open.**\n- [Breach] SR-01: Written report filed after 41 hours (REG-0001-001), limit 24 hours\n- [Breach] SR-02: Contained after about 7 hours (limit 4); found only in report MNT-0001-029\n- [Breach] SR-03: Clean-up verification due by 10 Aug 2026, still open\n- [Breach] RC-04: Notice REG-0001-002 needed a response by 30 Jul 2026; none recorded\n- [Fine] SR-01: Notice of violation REG-0001-002: USD 5,000 fine, open\n- [Pending] Manual \u00a710 RCA: Root-cause analysis due on the flowline: 3 corrective repairs in 12 months (MNT-0001-028, MNT-0001-029, MNT-0001-032); the report for MNT-0001-032 marks it as \"Action required\"\n- [Pending] T200 manual \u00a74: Planned shut-in from 7 Oct 2026 not yet recorded in the maintenance system, required before work starts (note CTX-0001-003)\n- [Met] SR-02: Contained after about 1.7 hours (limit 4); found only in report MNT-0001-032\n- [Met] RC-02: Yearly flowline test done on 7 Mar 2026 (MNT-0001-026)",
    "plan": {
     "intent": "query",
     "steps": [
@@ -2196,9 +2204,9 @@
      "notes": []
     }
    ],
-   "ms": 84
+   "ms": 66
   },
-  "secs": 0.09243035316467285
+  "secs": 0.07246017456054688
  },
  {
   "item": {
@@ -2207,14 +2215,14 @@
    "question": "In Southwest Block 24, which spills in the last 90 days were not contained within the SOP time limit?"
   },
   "answer": {
-   "text": "**2 spills: WELL-0082 and WELL-0100.**\n- WELL-0082 (INS-0082-0198, 10 Sep 2026, 0.7 bbl): Contained after about 7.1 hours (limit 4); found only in report MNT-0082-028\n- WELL-0100 (INS-0100-0196, 10 Sep 2026, 0.4 bbl): Contained after about 8.1 hours (limit 4); found only in report MNT-0100-034",
+   "text": "- **spill-response-sop#4. Protocols**: 4. Protocols\n| Protocol ID | Requirement |\n|---|---|\n| **SR-01** | For a **reportable or major** spill, phone the State Oil & Gas Commission immediately, then file the **written notice** (volume, affected area, cleanup plan) within **24 hours** of discovery, or within **2 hours** for a major spill. Discovery time is the time of the inspection that detected the spill. `hours_to_report` in the data \n- **regulatory-compliance-sop#2. Protocols**: 2. Protocols\n| Protocol ID | Requirement | Evidence in the data |\n|---|---|---|\n| **RC-01** | Every well must be inspected at least once every **14 days**. | `inspections.jsonl` timestamps |\n| **RC-02** | Every flowline must pass an **integrity test once per calendar year**. | `maintenance.jsonl` entries with issue \"Annual flowline integrity test\" |\n| **RC-03** | Any well down for more than **14 c\n- **field-work-sop#3. Protocols**: 3. Protocols\n| Protocol ID | Requirement |\n|---|---|\n| **WS-01** | Hold and record a **pre-job safety meeting** (job safety analysis) with the whole crew before any work starts. |\n| **WS-02** | **Isolate energy** before touching moving or pressurised equipment. Stop the prime mover at the bottom of the stroke, set and chain the brake, lock and tag the motor disconnect, close and tag the wellhead w",
+   "full_text": "- **spill-response-sop#4. Protocols**: 4. Protocols\n| Protocol ID | Requirement |\n|---|---|\n| **SR-01** | For a **reportable or major** spill, phone the State Oil & Gas Commission immediately, then file the **written notice** (volume, affected area, cleanup plan) within **24 hours** of discovery, or within **2 hours** for a major spill. Discovery time is the time of the inspection that detected the spill. `hours_to_report` in the data \n- **regulatory-compliance-sop#2. Protocols**: 2. Protocols\n| Protocol ID | Requirement | Evidence in the data |\n|---|---|---|\n| **RC-01** | Every well must be inspected at least once every **14 days**. | `inspections.jsonl` timestamps |\n| **RC-02** | Every flowline must pass an **integrity test once per calendar year**. | `maintenance.jsonl` entries with issue \"Annual flowline integrity test\" |\n| **RC-03** | Any well down for more than **14 c\n- **field-work-sop#3. Protocols**: 3. Protocols\n| Protocol ID | Requirement |\n|---|---|\n| **WS-01** | Hold and record a **pre-job safety meeting** (job safety analysis) with the whole crew before any work starts. |\n| **WS-02** | **Isolate energy** before touching moving or pressurised equipment. Stop the prime mover at the bottom of the stroke, set and chain the brake, lock and tag the motor disconnect, close and tag the wellhead w",
    "plan": {
     "intent": "query",
     "steps": [
      {
-      "operation": "spills_check",
+      "operation": "search_docs",
       "area": "Southwest Block 24",
-      "protocol": "SR-02",
       "period": "last 90 days (19 Jul 2026 to 16 Oct 2026)"
      }
     ],
@@ -2224,88 +2232,55 @@
    },
    "results": [
     {
-     "op": "spills_check",
-     "title": "Spills checked against SR-02",
+     "op": "search_docs",
+     "title": "From the manuals, SOPs and reports",
      "rows": [
       {
-       "Well": "WELL-0082",
-       "Date": "10 Sep 2026",
-       "Inspection": "INS-0082-0198",
-       "Barrels": 0.7,
-       "Status": "breach",
-       "Detail": "Contained after about 7.1 hours (limit 4); found only in report MNT-0082-028"
+       "ref": "spill-response-sop#4. Protocols",
+       "kind": "sop",
+       "text": "4. Protocols\n| Protocol ID | Requirement |\n|---|---|\n| **SR-01** | For a **reportable or major** spill, phone the State Oil & Gas Commission immediately, then file the **written notice** (volume, affected area, cleanup plan) within **24 hours** of discovery, or within **2 hours** for a major spill. Discovery time is the time of the inspection that detected the spill. `hours_to_report` in the data is the time to the written notice. |\n| **SR-02** | The source must be stopped and the spill contained within **4 hours** of discovery. |\n| **SR-03** | Contaminated soil must be cleaned to **1.0% TPH or less**. Take **at least 4 soil samples** to map the edges of a reportable spill. Haul soil above 5% TPH to an approved disposal site. For reportable and major spills, the remediation must be **verified within 60 days** of discovery; verification is closed only by a passing site inspection from the environmental agency. Smaller spills are cleaned to the same 1.0% TPH target without agency verification. |\n| **SR-04** | Every spill, including minor ones, must be recorded against the asset with an estimated volume and affected area. |"
       },
       {
-       "Well": "WELL-0100",
-       "Date": "10 Sep 2026",
-       "Inspection": "INS-0100-0196",
-       "Barrels": 0.4,
-       "Status": "breach",
-       "Detail": "Contained after about 8.1 hours (limit 4); found only in report MNT-0100-034"
+       "ref": "regulatory-compliance-sop#2. Protocols",
+       "kind": "sop",
+       "text": "2. Protocols\n| Protocol ID | Requirement | Evidence in the data |\n|---|---|---|\n| **RC-01** | Every well must be inspected at least once every **14 days**. | `inspections.jsonl` timestamps |\n| **RC-02** | Every flowline must pass an **integrity test once per calendar year**. | `maintenance.jsonl` entries with issue \"Annual flowline integrity test\" |\n| **RC-03** | Any well down for more than **14 consecutive days** must be reported to the area production supervisor. | Inspections plus context notes |\n| **RC-04** | Agency notices of violation must be answered within **30 days** and tracked until closed. | `regulatory-events.jsonl` status and `nov_response_filed` events |\n| **RC-05** | Keep a **flowline maintenance program**: weekly visual inspection of the pad and flowline route, corrective repair of any leak found, and prompt cleanup. Modelled on EPA SPCC rules for onshore production (40 CFR 112.9(d)(4)). | Inspections, flowline repairs and their reports |"
+      },
+      {
+       "ref": "field-work-sop#3. Protocols",
+       "kind": "sop",
+       "text": "3. Protocols\n| Protocol ID | Requirement |\n|---|---|\n| **WS-01** | Hold and record a **pre-job safety meeting** (job safety analysis) with the whole crew before any work starts. |\n| **WS-02** | **Isolate energy** before touching moving or pressurised equipment. Stop the prime mover at the bottom of the stroke, set and chain the brake, lock and tag the motor disconnect, close and tag the wellhead wing valve, and bleed trapped pressure. Remove locks only after the crew lead confirms everyone is clear. |\n| **WS-03** | Every crew member wears a **personal H2S monitor**, bump-tested that day. If any monitor reads **10 ppm or more**, stop work, move upwind, and do not return until readings are below 10 ppm and the HSE officer approves. |\n| **WS-04** | Welding, cutting or grinding needs a **hot work permit** and a **gas test** first. No hot work while flammable gas reads **10% of the lower explosive limit (LEL) or more**. |\n| **WS-05** | After any flowline repair, **pressure-test** the repaired section at **at least 1.25 \u00d7 the flowline's maximum operating pressure (MOP)** and **hold for 4 hours** with no unexplained pressure drop before returning the well to production. |\n| **WS-06** | Contaminated soil, absorbents and replaced parts with oil on them are **waste**. Bag or contain them on site, record the quantity, and ship them with a **waste manifest** to an approved disposal site. |\n| **WS-07** | Write the **maintenance report** within 3 days of finishing the work. Include what happened, root cause, work done, parts, safety steps, tests, waste and a compliance check against this SOP and the Spill Response SOP. |"
       }
      ],
-     "columns": [
-      "Well",
-      "Date",
-      "Inspection",
-      "Barrels",
-      "Status",
-      "Detail"
-     ],
+     "columns": [],
      "viz": {
-      "type": "table"
+      "type": "text"
      },
      "evidence": [
       {
-       "id": "INS-0082-0198",
-       "type": "inspection",
-       "label": ""
-      },
-      {
-       "id": "MNT-0082-028",
-       "type": "maintenance",
-       "label": ""
-      },
-      {
-       "id": "INS-0100-0196",
-       "type": "inspection",
-       "label": ""
-      },
-      {
-       "id": "MNT-0100-034",
-       "type": "maintenance",
-       "label": ""
-      },
-      {
-       "id": "spill-response-sop SR-02",
+       "id": "spill-response-sop#4. Protocols",
        "type": "doc",
-       "label": " The source must be stopped and the spill contained within 4 hours of discovery. |"
-      }
-     ],
-     "proof": [
+       "label": "Spill Response SOP"
+      },
       {
-       "step": "SR-02:  The source must be stopped and the spill contained within 4 hours of discovery. |",
-       "rule": {
-        "doc": "spill-response-sop",
-        "section": "SR-02",
-        "quote": " The source must be stopped and the spill contained within 4 hours of discovery. |"
-       }
+       "id": "regulatory-compliance-sop#2. Protocols",
+       "type": "doc",
+       "label": "Regulatory Compliance SOP"
+      },
+      {
+       "id": "field-work-sop#3. Protocols",
+       "type": "doc",
+       "label": "Field Work Safety and Maintenance SOP"
       }
      ],
-     "facts": {
-      "count": 2,
-      "wells": [
-       "WELL-0082",
-       "WELL-0100"
-      ]
-     },
+     "proof": [],
+     "facts": {},
      "conflicts": [],
      "notes": []
     }
    ],
-   "ms": 109
+   "ms": 57425
   },
-  "secs": 0.11877727508544922
+  "secs": 57.435497522354126
  },
  {
   "item": {
@@ -2318,6 +2293,7 @@
   },
   "answer": {
    "text": "**WELL-0121: 49 days; WELL-0107: 42 days; WELL-0138: 42 days**\n- Next is WELL-0119 at 28 days.\n- Window: 2026-06-16 to 2026-10-16.",
+   "full_text": "**WELL-0121: 49 days; WELL-0107: 42 days; WELL-0138: 42 days**\n- Next is WELL-0119 at 28 days.\n- Window: 2026-06-16 to 2026-10-16.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -2495,7 +2471,7 @@
         "section": "9.3 Production temperature rule",
         "quote": "sidered producing (active) when its wellhead temperature is at least 15 \u00b0C above ambient air temperature at the time of the reading. A difference below 15 \u00b0C means the",
         "value": 15.0,
-        "via": NaN
+        "via": null
        }
       },
       {
@@ -2505,7 +2481,7 @@
         "section": "3. Production temperature rule",
         "quote": "ed producing (active) only when its wellhead temperature is at least 20 \u00b0C above ambient air temperature at the time of the reading.",
         "value": 20.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -2537,9 +2513,9 @@
      "notes": []
     }
    ],
-   "ms": 37
+   "ms": 39
   },
-  "secs": 0.04089164733886719
+  "secs": 0.04465794563293457
  },
  {
   "item": {
@@ -2551,6 +2527,7 @@
   },
   "answer": {
    "text": "**WELL-0107: USD 5,176 \u00b7 WELL-0121: USD 25,794 \u00b7 WELL-0138: USD 46,942**",
+   "full_text": "**WELL-0107: USD 5,176 \u00b7 WELL-0121: USD 25,794 \u00b7 WELL-0138: USD 46,942**",
    "plan": {
     "intent": "query",
     "steps": [
@@ -2746,7 +2723,7 @@
    ],
    "ms": 14
   },
-  "secs": 0.01810622215270996
+  "secs": 0.019171714782714844
  },
  {
   "item": {
@@ -2758,6 +2735,7 @@
   },
   "answer": {
    "text": "**Correction recorded against INS-0164-0205.**\n- Ledger id: LDG-0001; Inspection: INS-0164-0205; Field: wellhead_temp_c; Original (kept): 24.0; Corrected to: 41.0; By: Michael Turner; Reason: The handheld thermal gun used in that inspection was faulty; the field crew re-measured the wellhead at 41.0 \u00b0C.; Scope: well WELL-0164 only\n- **Conflict:** Michael Turner: wellhead 41.0 \u00b0C (producing) vs Same inspection, Tyler Hughes noted: \"Pump jack not moving.\"\n  - Michael Turner, please confirm: the inspector's note disagrees with the corrected reading.\n- With 41 \u00b0C against 19.9 \u00b0C air (21.1 \u00b0C warmer, above the T200 limit of 15 \u00b0C), WELL-0164 is producing oil.",
+   "full_text": "**Correction recorded against INS-0164-0205.**\n- Ledger id: LDG-0001; Inspection: INS-0164-0205; Field: wellhead_temp_c; Original (kept): 24.0; Corrected to: 41.0; By: Michael Turner; Reason: The handheld thermal gun used in that inspection was faulty; the field crew re-measured the wellhead at 41.0 \u00b0C.; Scope: well WELL-0164 only\n- **Conflict:** Michael Turner: wellhead 41.0 \u00b0C (producing) vs Same inspection, Tyler Hughes noted: \"Pump jack not moving.\"\n  - Michael Turner, please confirm: the inspector's note disagrees with the corrected reading.\n- With 41 \u00b0C against 19.9 \u00b0C air (21.1 \u00b0C warmer, above the T200 limit of 15 \u00b0C), WELL-0164 is producing oil.",
    "plan": {
     "intent": "correction",
     "steps": [],
@@ -2819,7 +2797,7 @@
         "section": "9.3 Production temperature rule",
         "quote": "sidered producing (active) when its wellhead temperature is at least 15 \u00b0C above ambient air temperature at the time of the reading. A difference below 15 \u00b0C means the",
         "value": 15.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -2844,9 +2822,9 @@
      ]
     }
    ],
-   "ms": 911
+   "ms": 772
   },
-  "secs": 0.9264330863952637
+  "secs": 0.7862725257873535
  },
  {
   "item": {
@@ -2856,7 +2834,8 @@
    "question": "Which wells in Northeast Block 8 are not producing oil right now, and why? Show them in a table."
   },
   "answer": {
-   "text": "**3 wells not producing in Northeast Block 8.** (WELL-0170, WELL-0172 and WELL-0175)\n- WELL-0170: 2.9 \u00b0C above air, recorded status down. Repair MNT-0170-031, pump jack walking beam bearing wear, started 19 Sep 2026, still open.\n- WELL-0172: 5.7 \u00b0C above air, recorded status active (out of date). Repair MNT-0172-028, flowline corrosion pinhole leak, started 3 Oct 2026, still open (inspector: \"No stroke observed during flight.\").\n- WELL-0175: 0.4 \u00b0C above air, recorded status active (out of date). No recorded reason.\n- WELL-0164 is no longer listed: Michael Turner corrected INS-0164-0205 wellhead_temp_c from 24.0 to 41.0 (The handheld thermal gun used in that inspection was faulty; the field crew re-measured the wellhead at 41.0 \u00b0C.), which puts it 21.1 \u00b0C above air, above the 15 \u00b0C limit.\n- Where nothing explains the stop, check the pump jack and prime mover on site; no cause is invented.",
+   "text": "**3 wells not producing in Northeast Block 8.** (WELL-0170, WELL-0172 and WELL-0175)\n- WELL-0164 is no longer listed: Michael Turner corrected INS-0164-0205 wellhead_temp_c from 24.0 to 41.0 (The handheld thermal gun used in that inspection was faulty; the field crew re-measured the wellhead at 41.0 \u00b0C.), which puts it 21.1 \u00b0C above air, above the 15 \u00b0C limit.\n- Where nothing explains the stop, check the pump jack and prime mover on site; no cause is invented.",
+   "full_text": "**3 wells not producing in Northeast Block 8.** (WELL-0170, WELL-0172 and WELL-0175)\n- WELL-0170: 2.9 \u00b0C above air, recorded status down. Repair MNT-0170-031, pump jack walking beam bearing wear, started 19 Sep 2026, still open.\n- WELL-0172: 5.7 \u00b0C above air, recorded status active (out of date). Repair MNT-0172-028, flowline corrosion pinhole leak, started 3 Oct 2026, still open (inspector: \"No stroke observed during flight.\").\n- WELL-0175: 0.4 \u00b0C above air, recorded status active (out of date). No recorded reason.\n- WELL-0164 is no longer listed: Michael Turner corrected INS-0164-0205 wellhead_temp_c from 24.0 to 41.0 (The handheld thermal gun used in that inspection was faulty; the field crew re-measured the wellhead at 41.0 \u00b0C.), which puts it 21.1 \u00b0C above air, above the 15 \u00b0C limit.\n- Where nothing explains the stop, check the pump jack and prime mover on site; no cause is invented.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -2958,7 +2937,7 @@
         "section": "9.3 Production temperature rule",
         "quote": "sidered producing (active) when its wellhead temperature is at least 15 \u00b0C above ambient air temperature at the time of the reading. A difference below 15 \u00b0C means the",
         "value": 15.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -2977,9 +2956,9 @@
      ]
     }
    ],
-   "ms": 59
+   "ms": 46
   },
-  "secs": 0.06505632400512695
+  "secs": 0.05099177360534668
  },
  {
   "item": {
@@ -2990,6 +2969,7 @@
   },
   "answer": {
    "text": "**Correction recorded against INS-0151-0201.**\n- Ledger id: LDG-0002; Inspection: INS-0151-0201; Field: spill_est_volume_bbl; Original (kept): 4.5; Corrected to: 5.4; By: Michael Turner; Reason: The AI estimated the 24 Sep spill at WELL-0151 as 4.5 bbl. The field crew measured 5.4 bbl.; Scope: well WELL-0151 only\n- SR-01: Reportable spill (5.4 bbl): written notice due within 24 hours of 24 Sep 2026 15:30; none recorded (possible breach)\n- SR-02: Contained after about 6.4 hours (limit 4); found only in report MNT-0151-025\n- SR-03: Clean-up verification due by 23 Nov 2026\n- report: Report MNT-0151-025 classed the spill as \"moderate\" and listed no reporting duty; with the current volume (5.4 bbl) it is reportable, so that no longer holds",
+   "full_text": "**Correction recorded against INS-0151-0201.**\n- Ledger id: LDG-0002; Inspection: INS-0151-0201; Field: spill_est_volume_bbl; Original (kept): 4.5; Corrected to: 5.4; By: Michael Turner; Reason: The AI estimated the 24 Sep spill at WELL-0151 as 4.5 bbl. The field crew measured 5.4 bbl.; Scope: well WELL-0151 only\n- SR-01: Reportable spill (5.4 bbl): written notice due within 24 hours of 24 Sep 2026 15:30; none recorded (possible breach)\n- SR-02: Contained after about 6.4 hours (limit 4); found only in report MNT-0151-025\n- SR-03: Clean-up verification due by 23 Nov 2026\n- report: Report MNT-0151-025 classed the spill as \"moderate\" and listed no reporting duty; with the current volume (5.4 bbl) it is reportable, so that no longer holds",
    "plan": {
     "intent": "correction",
     "steps": [],
@@ -3072,9 +3052,9 @@
      ]
     }
    ],
-   "ms": 1700
+   "ms": 819
   },
-  "secs": 1.7171094417572021
+  "secs": 0.8340997695922852
  },
  {
   "item": {
@@ -3084,7 +3064,8 @@
    "question": "Which wells in Northeast Block 7 need a root-cause analysis on their pump jack?"
   },
   "answer": {
-   "text": "**WELL-0108, WELL-0121 and WELL-0138 need a root-cause analysis.**\n- WELL-0108 (T350): 3 corrective pump jack repairs in 12 months (MNT-0108-024, MNT-0108-026, MNT-0108-028); rule: T350 manual (3).\n- WELL-0121 (T200): 3 corrective pump jack repairs in 12 months (MNT-0121-031, MNT-0121-034, MNT-0121-035); rule: T200 manual (3).\n- WELL-0138 (T350): 3 corrective pump jack repairs in 12 months (MNT-0138-031, MNT-0138-032, MNT-0138-034); rule: T350 manual (3).",
+   "text": "**WELL-0108, WELL-0121 and WELL-0138 need a root-cause analysis.**",
+   "full_text": "**WELL-0108, WELL-0121 and WELL-0138 need a root-cause analysis.**\n- WELL-0108 (T350): 3 corrective pump jack repairs in 12 months (MNT-0108-024, MNT-0108-026, MNT-0108-028); rule: T350 manual (3).\n- WELL-0121 (T200): 3 corrective pump jack repairs in 12 months (MNT-0121-031, MNT-0121-034, MNT-0121-035); rule: T200 manual (3).\n- WELL-0138 (T350): 3 corrective pump jack repairs in 12 months (MNT-0138-031, MNT-0138-032, MNT-0138-034); rule: T350 manual (3).",
    "plan": {
     "intent": "query",
     "steps": [
@@ -3207,7 +3188,7 @@
         "section": "10. Maintenance escalation",
         "quote": "- Three or more corrective maintenance events on the same equipment kind in the 12 months before the current date require a r",
         "value": 3.0,
-        "via": NaN
+        "via": null
        }
       },
       {
@@ -3217,7 +3198,7 @@
         "section": "6. Maintenance escalation",
         "quote": "Same as T200 section 10 (RCA after three corrective events on the same equipment kind within 12 months; report downtime over 14 con",
         "value": 3.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -3232,9 +3213,9 @@
      "notes": []
     }
    ],
-   "ms": 558
+   "ms": 262
   },
-  "secs": 0.5628824234008789
+  "secs": 0.2667233943939209
  },
  {
   "item": {
@@ -3245,6 +3226,7 @@
   },
   "answer": {
    "text": "**Rule recorded.**\n- Ledger id: LDG-0003; Applies to: all T350 wells; Rule: rca_corrective_count (pump jack); Manual value: 3.0; New value: 2; By: Michael Turner\n- Applies only to T350 wells; other types keep the manual value.",
+   "full_text": "**Rule recorded.**\n- Ledger id: LDG-0003; Applies to: all T350 wells; Rule: rca_corrective_count (pump jack); Manual value: 3.0; New value: 2; By: Michael Turner\n- Applies only to T350 wells; other types keep the manual value.",
    "plan": {
     "intent": "rule",
     "steps": [],
@@ -3292,9 +3274,9 @@
      ]
     }
    ],
-   "ms": 11
+   "ms": 9
   },
-  "secs": 0.01612567901611328
+  "secs": 0.014129400253295898
  },
  {
   "item": {
@@ -3305,7 +3287,8 @@
    "question": "Which wells in Northeast Block 7 need a root-cause analysis on their pump jack?"
   },
   "answer": {
-   "text": "**WELL-0108, WELL-0120, WELL-0121 and WELL-0138 need a root-cause analysis.**\n- WELL-0108 (T350): 3 corrective pump jack repairs in 12 months (MNT-0108-024, MNT-0108-026, MNT-0108-028); rule: Michael Turner's rule for T350 (2).\n- WELL-0120 (T350): 2 corrective pump jack repairs in 12 months (MNT-0120-025, MNT-0120-030); rule: Michael Turner's rule for T350 (2).\n- WELL-0121 (T200): 3 corrective pump jack repairs in 12 months (MNT-0121-031, MNT-0121-034, MNT-0121-035); rule: T200 manual (3).\n- WELL-0138 (T350): 3 corrective pump jack repairs in 12 months (MNT-0138-031, MNT-0138-032, MNT-0138-034); rule: Michael Turner's rule for T350 (2).\n- WELL-0120 (T350, 2 repairs) is included because of Michael Turner's rule for T350 (2), not the manual.",
+   "text": "**WELL-0108, WELL-0120, WELL-0121 and WELL-0138 need a root-cause analysis.**\n- WELL-0120 (T350, 2 repairs) is included because of Michael Turner's rule for T350 (2), not the manual.",
+   "full_text": "**WELL-0108, WELL-0120, WELL-0121 and WELL-0138 need a root-cause analysis.**\n- WELL-0108 (T350): 3 corrective pump jack repairs in 12 months (MNT-0108-024, MNT-0108-026, MNT-0108-028); rule: Michael Turner's rule for T350 (2).\n- WELL-0120 (T350): 2 corrective pump jack repairs in 12 months (MNT-0120-025, MNT-0120-030); rule: Michael Turner's rule for T350 (2).\n- WELL-0121 (T200): 3 corrective pump jack repairs in 12 months (MNT-0121-031, MNT-0121-034, MNT-0121-035); rule: T200 manual (3).\n- WELL-0138 (T350): 3 corrective pump jack repairs in 12 months (MNT-0138-031, MNT-0138-032, MNT-0138-034); rule: Michael Turner's rule for T350 (2).\n- WELL-0120 (T350, 2 repairs) is included because of Michael Turner's rule for T350 (2), not the manual.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -3452,7 +3435,7 @@
         "section": "10. Maintenance escalation",
         "quote": "- Three or more corrective maintenance events on the same equipment kind in the 12 months before the current date require a r",
         "value": 3.0,
-        "via": NaN
+        "via": null
        }
       },
       {
@@ -3462,7 +3445,7 @@
         "section": "6. Maintenance escalation",
         "quote": "Same as T200 section 10 (RCA after three corrective events on the same equipment kind within 12 months; report downtime over 14 con",
         "value": 3.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -3490,9 +3473,9 @@
      ]
     }
    ],
-   "ms": 2288
+   "ms": 1147
   },
-  "secs": 2.293572425842285
+  "secs": 1.1524202823638916
  },
  {
   "item": {
@@ -3502,6 +3485,7 @@
   },
   "answer": {
    "text": "**Yes, WELL-0164 is producing oil right now.**\n- Latest inspection INS-0164-0205 on 15 Oct 2026, by manual, by Tyler Hughes.\n- The wellhead was 21.1 \u00b0C warmer than the air (41.0 vs 19.9 \u00b0C); the T200 limit is 15 \u00b0C, so it is above the limit.\n- Inspector's remark: \"Pump jack not moving.\"\n- **Conflict:** Michael Turner: wellhead_temp_c = 41.0 vs Inspector Tyler Hughes noted: \"Pump jack not moving.\"\n  - Please confirm the corrected reading for INS-0164-0205.\n- The wellhead_temp_c of INS-0164-0205 was corrected by Michael Turner from 24.0 to 41.0 (The handheld thermal gun used in that inspection was faulty; the field crew re-measured the wellhead at 41.0 \u00b0C.). Original kept.",
+   "full_text": "**Yes, WELL-0164 is producing oil right now.**\n- Latest inspection INS-0164-0205 on 15 Oct 2026, by manual, by Tyler Hughes.\n- The wellhead was 21.1 \u00b0C warmer than the air (41.0 vs 19.9 \u00b0C); the T200 limit is 15 \u00b0C, so it is above the limit.\n- Inspector's remark: \"Pump jack not moving.\"\n- **Conflict:** Michael Turner: wellhead_temp_c = 41.0 vs Inspector Tyler Hughes noted: \"Pump jack not moving.\"\n  - Please confirm the corrected reading for INS-0164-0205.\n- The wellhead_temp_c of INS-0164-0205 was corrected by Michael Turner from 24.0 to 41.0 (The handheld thermal gun used in that inspection was faulty; the field crew re-measured the wellhead at 41.0 \u00b0C.). Original kept.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -3563,8 +3547,8 @@
          "reason": "The handheld thermal gun used in that inspection was faulty; the field crew re-measured the wellhead at 41.0 \u00b0C.",
          "text": null,
          "status": "applied",
-         "created_at": "2026-10-17T08:04:16+00:00",
-         "conv_id": "15",
+         "created_at": "2026-10-17T08:26:27+00:00",
+         "conv_id": "42",
          "author_name": "Michael Turner"
         }
        ]
@@ -3599,7 +3583,7 @@
         "section": "9.3 Production temperature rule",
         "quote": "sidered producing (active) when its wellhead temperature is at least 15 \u00b0C above ambient air temperature at the time of the reading. A difference below 15 \u00b0C means the",
         "value": 15.0,
-        "via": NaN
+        "via": null
        }
       }
      ],
@@ -3622,9 +3606,9 @@
      ]
     }
    ],
-   "ms": 27
+   "ms": 17
   },
-  "secs": 0.03201603889465332
+  "secs": 0.021453857421875
  },
  {
   "item": {
@@ -3633,7 +3617,8 @@
    "question": "Which spills in Northeast Block 8 in the last 90 days needed a report to the regulator?"
   },
   "answer": {
-   "text": "**1 spill: WELL-0151.**\n- WELL-0151 (INS-0151-0201, 24 Sep 2026, 5.4 bbl): Reportable spill (5.4 bbl): written notice due within 24 hours of 24 Sep 2026 15:30; none recorded (possible breach)\n- INS-0151-0201 volume corrected by Michael Turner from 4.5 to 5.4 bbl.\n- Reportable means 5 bbl or more (Spill Response SOP \u00a73); no other spill in the period reached it.",
+   "text": "**1 spill: WELL-0151.**\n- INS-0151-0201 volume corrected by Michael Turner from 4.5 to 5.4 bbl.\n- Reportable means 5 bbl or more (Spill Response SOP \u00a73); no other spill in the period reached it.",
+   "full_text": "**1 spill: WELL-0151.**\n- WELL-0151 (INS-0151-0201, 24 Sep 2026, 5.4 bbl): Reportable spill (5.4 bbl): written notice due within 24 hours of 24 Sep 2026 15:30; none recorded (possible breach)\n- INS-0151-0201 volume corrected by Michael Turner from 4.5 to 5.4 bbl.\n- Reportable means 5 bbl or more (Spill Response SOP \u00a73); no other spill in the period reached it.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -3713,9 +3698,9 @@
      ]
     }
    ],
-   "ms": 172
+   "ms": 56
   },
-  "secs": 0.18052291870117188
+  "secs": 0.06243896484375
  },
  {
   "item": {
@@ -3725,6 +3710,7 @@
   },
   "answer": {
    "text": "**Statement about WELL-0007.**\n- Ledger id: LDG-0004; Well: WELL-0007; Statement: FYI for everyone: WELL-0007 will be shut in from 17 Oct for a 10-day planned workover.; By: Jake Morales; Status: reported; Check: No inspection since then to check against.; Visible to: everyone",
+   "full_text": "**Statement about WELL-0007.**\n- Ledger id: LDG-0004; Well: WELL-0007; Statement: FYI for everyone: WELL-0007 will be shut in from 17 Oct for a 10-day planned workover.; By: Jake Morales; Status: reported; Check: No inspection since then to check against.; Visible to: everyone",
    "plan": {
     "intent": "statement",
     "steps": [],
@@ -3775,9 +3761,9 @@
      "notes": []
     }
    ],
-   "ms": 23
+   "ms": 16
   },
-  "secs": 0.0292661190032959
+  "secs": 0.020678997039794922
  },
  {
   "item": {
@@ -3788,7 +3774,8 @@
    "question": "Is any downtime planned for WELL-0007?"
   },
   "answer": {
-   "text": "**Yes.**\n- From 17 Oct 2026 until 27 Oct 2026: FYI for everyone: WELL-0007 will be shut in from 17 Oct for a 10-day planned workover. (source: Jake Morales (LDG-0004, reported))",
+   "text": "**Yes.**",
+   "full_text": "**Yes.**\n- From 17 Oct 2026 until 27 Oct 2026: FYI for everyone: WELL-0007 will be shut in from 17 Oct for a 10-day planned workover. (source: Jake Morales (LDG-0004, reported))",
    "plan": {
     "intent": "query",
     "steps": [
@@ -3839,9 +3826,9 @@
      "notes": []
     }
    ],
-   "ms": 1754
+   "ms": 774
   },
-  "secs": 1.7596514225006104
+  "secs": 0.7788238525390625
  },
  {
   "item": {
@@ -3853,6 +3840,7 @@
   },
   "answer": {
    "text": "- I have no earlier conversation with Jessica Reed about those wells, so I can't tell which wells you mean. Other people's conversations are private. Which wells do you want?",
+   "full_text": "- I have no earlier conversation with Jessica Reed about those wells, so I can't tell which wells you mean. Other people's conversations are private. Which wells do you want?",
    "plan": {
     "intent": "query",
     "steps": [
@@ -3884,7 +3872,7 @@
    ],
    "ms": 5
   },
-  "secs": 0.009473085403442383
+  "secs": 0.00928807258605957
  },
  {
   "item": {
@@ -3894,6 +3882,7 @@
   },
   "answer": {
    "text": "**Statement about WELL-0175.**\n- Ledger id: LDG-0005; Well: WELL-0175; Statement: WELL-0175 has been shut in for planned work since 14 Oct.; By: Michael Turner; Status: corroborated; Check: The 15 Oct 2026 inspection (by Jessica Reed) shows the wellhead 0.4 \u00b0C above the air, so the well is not producing oil.; Visible to: everyone",
+   "full_text": "**Statement about WELL-0175.**\n- Ledger id: LDG-0005; Well: WELL-0175; Statement: WELL-0175 has been shut in for planned work since 14 Oct.; By: Michael Turner; Status: corroborated; Check: The 15 Oct 2026 inspection (by Jessica Reed) shows the wellhead 0.4 \u00b0C above the air, so the well is not producing oil.; Visible to: everyone",
    "plan": {
     "intent": "statement",
     "steps": [],
@@ -3949,9 +3938,9 @@
      "notes": []
     }
    ],
-   "ms": 33
+   "ms": 20
   },
-  "secs": 0.03766226768493652
+  "secs": 0.02586507797241211
  },
  {
   "item": {
@@ -3961,6 +3950,7 @@
   },
   "answer": {
    "text": "**Statement about WELL-0175.**\n- Ledger id: LDG-0006; Well: WELL-0175; Statement: WELL-0175 is running fine.; By: Tyler Hughes; Status: unconfirmed; Check: The 15 Oct 2026 inspection (by Jessica Reed) shows the wellhead 0.4 \u00b0C above the air, so the well is not producing oil.; Visible to: everyone\n- **Conflict:** Tyler Hughes: \"WELL-0175 is running fine.\" vs The 15 Oct 2026 inspection (by Jessica Reed) shows the wellhead 0.4 \u00b0C above the air, so the well is not producing oil.\n  - The data matches: Michael Turner: \"WELL-0175 has been shut in for planned work since 14 Oct.\" (LDG-0005, corroborated)\n  - Tyler Hughes, can you confirm? Your statement is kept on record as unconfirmed.",
+   "full_text": "**Statement about WELL-0175.**\n- Ledger id: LDG-0006; Well: WELL-0175; Statement: WELL-0175 is running fine.; By: Tyler Hughes; Status: unconfirmed; Check: The 15 Oct 2026 inspection (by Jessica Reed) shows the wellhead 0.4 \u00b0C above the air, so the well is not producing oil.; Visible to: everyone\n- **Conflict:** Tyler Hughes: \"WELL-0175 is running fine.\" vs The 15 Oct 2026 inspection (by Jessica Reed) shows the wellhead 0.4 \u00b0C above the air, so the well is not producing oil.\n  - The data matches: Michael Turner: \"WELL-0175 has been shut in for planned work since 14 Oct.\" (LDG-0005, corroborated)\n  - Tyler Hughes, can you confirm? Your statement is kept on record as unconfirmed.",
    "plan": {
     "intent": "statement",
     "steps": [],
@@ -4028,9 +4018,9 @@
      "notes": []
     }
    ],
-   "ms": 1779
+   "ms": 854
   },
-  "secs": 1.783031940460205
+  "secs": 0.8589503765106201
  },
  {
   "item": {
@@ -4040,6 +4030,7 @@
   },
   "answer": {
    "text": "**Statement about WELL-0001.**\n- Ledger id: LDG-0007; Well: WELL-0001; Statement: WELL-0001 is back online since 14 Oct.; By: Jake Morales; Status: unconfirmed; Check: The 15 Oct 2026 inspection (by Ryan Brooks) shows the wellhead 3.2 \u00b0C above the air, so the well is not producing oil.; Visible to: everyone\n- **Conflict:** Jake Morales: \"WELL-0001 is back online since 14 Oct.\" vs The 15 Oct 2026 inspection (by Ryan Brooks) shows the wellhead 3.2 \u00b0C above the air, so the well is not producing oil.\n  - The data matches: note CTX-0001-003 by Jake Morales: \"Well shut in from 7 Oct for planned rod string replacement. Work order not yet in the maintenance system. Expected back online around 20 Oct.\" and note CTX-0001-003 expects a return around 20 Oct 2026\n  - Jake Morales, can you confirm? Your statement is kept on record as unconfirmed.",
+   "full_text": "**Statement about WELL-0001.**\n- Ledger id: LDG-0007; Well: WELL-0001; Statement: WELL-0001 is back online since 14 Oct.; By: Jake Morales; Status: unconfirmed; Check: The 15 Oct 2026 inspection (by Ryan Brooks) shows the wellhead 3.2 \u00b0C above the air, so the well is not producing oil.; Visible to: everyone\n- **Conflict:** Jake Morales: \"WELL-0001 is back online since 14 Oct.\" vs The 15 Oct 2026 inspection (by Ryan Brooks) shows the wellhead 3.2 \u00b0C above the air, so the well is not producing oil.\n  - The data matches: note CTX-0001-003 by Jake Morales: \"Well shut in from 7 Oct for planned rod string replacement. Work order not yet in the maintenance system. Expected back online around 20 Oct.\" and note CTX-0001-003 expects a return around 20 Oct 2026\n  - Jake Morales, can you confirm? Your statement is kept on record as unconfirmed.",
    "plan": {
     "intent": "statement",
     "steps": [],
@@ -4113,9 +4104,9 @@
      "notes": []
     }
    ],
-   "ms": 1896
+   "ms": 873
   },
-  "secs": 1.9005177021026611
+  "secs": 0.8778634071350098
  },
  {
   "item": {
@@ -4125,6 +4116,7 @@
   },
   "answer": {
    "text": "**Yes.** Inspection INS-0101-0197 flagged a 1.0 bbl spill (\"Oil sheen around cellar.\").\n- **People disagree:** Ryan Brooks (field inspector, CTX-0101-002): \"Inspection INS-0101-0197: I think this was only produced water, not crude.\"; Chris Dalton (hse officer, CTX-0101-003): \"Inspection INS-0101-0197: sampled the stain, it is crude oil. The detection stands.\"\n- Neither note is a formal correction, and spill repair MNT-0101-029 was done, so the detection stands.",
+   "full_text": "**Yes.** Inspection INS-0101-0197 flagged a 1.0 bbl spill (\"Oil sheen around cellar.\").\n- **People disagree:** Ryan Brooks (field inspector, CTX-0101-002): \"Inspection INS-0101-0197: I think this was only produced water, not crude.\"; Chris Dalton (hse officer, CTX-0101-003): \"Inspection INS-0101-0197: sampled the stain, it is crude oil. The detection stands.\"\n- Neither note is a formal correction, and spill repair MNT-0101-029 was done, so the detection stands.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -4212,8 +4204,8 @@
      "notes": []
     }
    ],
-   "ms": 1799
+   "ms": 802
   },
-  "secs": 1.8037543296813965
+  "secs": 0.8069515228271484
  }
 ]

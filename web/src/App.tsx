@@ -3,14 +3,22 @@ import Markdown from "react-markdown";
 import { api, type Answer, type User } from "./api";
 import { Viz } from "./Viz";
 
+type DrawerKind = "record" | "ledger" | "proof" | "rules" | "memory";
 type Msg = { role: "user" | "assistant"; content: string; payload?: Answer | null; pending?: boolean };
 
+const TEACH = [
+  "WELL-0333's recalled pump was swapped out yesterday. The work order isn't in the system yet. Please count it as replaced from now on.",
+  "Also, just for me: whenever you list wells, sort them by area and then by well ID, and show costs in thousands of dollars.",
+  "Nathan told me the recalled pump on WELL-0577 was swapped as well. Take it off the recall list.",
+  "The AI estimated the 24 Sep spill at WELL-0151 as 4.5 bbl. The field crew measured 5.4 bbl.",
+];
+
 const SUGGEST = [
-  "Is WELL-0001 producing oil right now? When was it last inspected, and by whom?",
-  "Which wells in Northeast Block 8 are not producing oil right now, and why? Show them in a table.",
-  "Which 3 wells in Northeast Block 7 had the most downtime in the last 4 months? Show a bar chart.",
-  "Show a heatmap of 2026 spills by geographic area and month.",
-  "Which rules has WELL-0001 broken in the last 12 months, and what is still open?",
+  "All our wells feed one reservoir. Map the reservoir pressure across the field from the pressure data.",
+  "Since 1 Nov 2026, every time an operator note reports gas at a well, did we get someone out to that well in time under our operating procedures?",
+  "Across all areas, which temporary flowline bypasses are in place right now, and is each one allowed?",
+  "Which recalled pumps are still in the ground right now?",
+  "Which region of the field consistently runs hotter?",
 ];
 
 export default function App() {
@@ -24,7 +32,9 @@ export default function App() {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
-  const [drawer, setDrawer] = useState<{ kind: "record" | "ledger" | "proof"; data: any } | null>(null);
+  const [drawer, setDrawer] = useState<{ kind: DrawerKind; data: any } | null>(null);
+  const [armed, setArmed] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
   const [attention, setAttention] = useState<any[]>([]);
   const end = useRef<HTMLDivElement>(null);
 
@@ -34,6 +44,19 @@ export default function App() {
   }, []);
   useEffect(() => { if (user) { api.convs(user).then(setConvs); setConv(null); setMsgs([]); } }, [user]);
   useEffect(() => { end.current?.scrollIntoView({ behavior: "smooth" }); }, [msgs]);
+  useEffect(() => {
+    if (!busy) { setElapsed(0); return; }
+    const t0 = Date.now();
+    const id = setInterval(() => setElapsed(Math.floor((Date.now() - t0) / 1000)), 500);
+    return () => clearInterval(id);
+  }, [busy]);
+
+  async function resetDemo() {
+    if (!armed) { setArmed(true); setTimeout(() => setArmed(false), 3000); return; }
+    await api.reset();
+    setArmed(false); setConv(null); setMsgs([]); setConvs([]); setDrawer(null);
+    api.attention().then(setAttention).catch(() => {});
+  }
 
   const me = users.find((u) => u.user_id === user);
 
@@ -77,7 +100,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="top">
-        <div className="brand"><span className="logo">◉</span> Wellspring <span className="muted">Asset Intelligence Copilot</span></div>
+        <div className="brand"><span className="logo">◉</span> Wellspring <span className="muted">Asset Intelligence Copilot</span><span className="today">today {today}</span></div>
         <div className="controls">
           <label>User
             <select value={user} onChange={(e) => setUser(e.target.value)}>
@@ -88,7 +111,10 @@ export default function App() {
             <input type="date" value={sessionDate} onChange={(e) => setSessionDate(e.target.value)} />
           </label>
           <button className="btn" onClick={() => { setConv(null); setMsgs([]); }}>New chat</button>
+          <button className="btn ghost" onClick={async () => setDrawer({ kind: "memory", data: await api.memory(user) })}>My memory</button>
           <button className="btn ghost" onClick={async () => setDrawer({ kind: "ledger", data: await api.ledger() })}>Ledger</button>
+          <button className="btn ghost" onClick={async () => setDrawer({ kind: "rules", data: (await api.meta()).rules })}>Rules</button>
+          <button className={`btn ghost ${armed ? "armed" : ""}`} title="Clears the demo ledger and conversations" onClick={resetDemo}>{armed ? "Click again to reset" : "Reset demo"}</button>
         </div>
       </header>
 
@@ -119,12 +145,15 @@ export default function App() {
           <div className="empty">
             <h1>Ask about your wells</h1>
             <p className="muted">{nWells} wells · today is {today} · signed in as {me?.name} ({me?.team})</p>
+            <div className="group-title">Ask</div>
             <div className="suggest">{SUGGEST.map((s) => <button key={s} onClick={() => send(s)}>{s}</button>)}</div>
+            <div className="group-title">Teach it (shared with everyone, original kept)</div>
+            <div className="suggest teach">{TEACH.map((s) => <button key={s} onClick={() => send(s)}>{s}</button>)}</div>
           </div>
         )}
         {msgs.map((m, i) => (
           <div key={i} className={`msg ${m.role}`}>
-            {m.role === "user" ? <div className="bubble">{m.content}</div> : m.pending ? <div className="thinking">Reading the records…</div> : (
+            {m.role === "user" ? <div className="bubble">{m.content}</div> : m.pending ? <div className="thinking"><span className="dots" />{elapsed < 4 ? "Reading the records" : elapsed < 15 ? `Working on it · ${elapsed}s` : `The language model is being slow, still working · ${elapsed}s`}</div> : (
               <AnswerView m={m} onEvidence={openEvidence} onProof={(p) => setDrawer({ kind: "proof", data: p })} />
             )}
           </div>
@@ -139,12 +168,14 @@ export default function App() {
       {drawer && (
         <aside className="drawer">
           <div className="drawer-head">
-            <b>{drawer.kind === "record" ? drawer.data.id : drawer.kind === "ledger" ? "Ledger (shared knowledge)" : "Show the work"}</b>
+            <b>{drawer.kind === "record" ? drawer.data.id : drawer.kind === "ledger" ? "Ledger (shared with every user)" : drawer.kind === "rules" ? "Rules parsed from the manuals and SOPs" : drawer.kind === "memory" ? `My private memory · ${me?.name ?? ""}` : "Show the work"}</b>
             <button className="btn ghost" onClick={() => setDrawer(null)}>Close</button>
           </div>
           {drawer.kind === "record" && <RecordView d={drawer.data} />}
           {drawer.kind === "ledger" && <LedgerView rows={drawer.data} />}
           {drawer.kind === "proof" && <ProofView a={drawer.data} onEvidence={openEvidence} />}
+          {drawer.kind === "rules" && <RulesView rows={drawer.data} onEvidence={openEvidence} />}
+          {drawer.kind === "memory" && <MemoryView rows={drawer.data} />}
         </aside>
       )}
     </div>
@@ -242,6 +273,40 @@ function ProofView({ a, onEvidence }: { a: Answer; onEvidence: (id: string) => v
           ))}
           <div className="small muted">Key facts: {JSON.stringify(r.facts)}</div>
           <div className="evidence">{r.evidence.map((e) => <button key={e.id} className={`chip ${e.type}`} onClick={() => onEvidence(e.id)}>{e.id}</button>)}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function RulesView({ rows, onEvidence }: { rows: any[]; onEvidence: (id: string) => void }) {
+  return (
+    <div className="tablewrap">
+      <table>
+        <thead><tr><th>Scope</th><th>Rule</th><th>Value</th><th>Source</th></tr></thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={i}>
+              <td>{r.scope}</td><td>{r.key}</td>
+              <td className="num">{r.value}{r.unit ? ` ${r.unit}` : ""}</td>
+              <td><button className="chip doc" onClick={() => onEvidence(`${r.doc_id} ${r.section}`)}>{r.doc_id} {r.section}</button>{r.via ? <span className="muted small"> via {r.via}</span> : null}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function MemoryView({ rows }: { rows: any[] }) {
+  if (!rows.length) return <p className="muted">No earlier results saved for this user. Ask a question that returns wells, then open a new chat and say "the wells we discussed yesterday". Other users cannot see this list.</p>;
+  return (
+    <div className="ledger">
+      {rows.map((r) => (
+        <div key={r.id} className="lrow">
+          <div className="eyebrow">{r.session_date} · {r.op}</div>
+          <div>{r.question}</div>
+          <div className="muted small">{r.entity_ids.slice(0, 12).join(", ")}{r.entity_ids.length > 12 ? " …" : ""}</div>
         </div>
       ))}
     </div>

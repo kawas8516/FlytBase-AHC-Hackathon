@@ -28,7 +28,9 @@ NOT_RUNNING = re.compile(r"not moving|no stroke|not running|stopped|seized|not t
 
 
 def _now():
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    """Ledger time: the configured 'today' with the real clock time, so entries sit inside the dataset's calendar."""
+    n = datetime.now(timezone.utc)
+    return datetime(TODAY.year, TODAY.month, TODAY.day, n.hour, n.minute, n.second, tzinfo=timezone.utc).isoformat(timespec="seconds")
 
 
 class Ledger:
@@ -125,8 +127,13 @@ class Ledger:
         ops = self.ops()
         res = Result("correction", f"Correction recorded against {row.inspection_id}")
         res.evidence = [{"id": row.inspection_id, "type": "inspection", "label": ""}, {"id": fid, "type": "ledger", "label": "correction"}]
-        res.rows = [{"Ledger id": fid, "Inspection": row.inspection_id, "Field": field, "Original (kept)": original,
-                     "Corrected to": value, "By": d.name(user_id), "Reason": reason, "Scope": f"well {well} only"}]
+        def _fmt(v):
+            try:
+                return f"{float(v):.1f}"
+            except (TypeError, ValueError):
+                return v
+        res.rows = [{"Ledger id": fid, "Inspection": row.inspection_id, "Field": field, "Original (kept)": _fmt(original),
+                     "Corrected to": _fmt(value), "By": d.name(user_id), "Reason": reason, "Scope": f"well {well} only"}]
         res.columns = list(res.rows[0])
         res.viz = {"type": "receipt"}
         new = ops.d.ins[ops.d.ins.inspection_id == row.inspection_id].iloc[0]
@@ -163,7 +170,7 @@ class Ledger:
         res = Result("rule_override", "Rule recorded")
         res.rows = [{"Ledger id": fid, "Applies to": f"all {scope_id} wells" if scope_type == "well_type" else scope_id,
                      "Rule": key + (f" ({equipment_kind.replace('_', ' ')})" if equipment_kind else ""),
-                     "Manual value": base, "New value": value, "By": d.name(user_id)}]
+                     "Manual value": f"{base:g}" if isinstance(base, float) else base, "New value": f"{value:g}" if isinstance(value, (int, float)) else value, "By": d.name(user_id)}]
         res.columns = list(res.rows[0])
         res.viz = {"type": "receipt"}
         res.evidence = [{"id": fid, "type": "ledger", "label": "rule override"}]
@@ -199,7 +206,7 @@ class Ledger:
                     n = d.notes[d.notes.note_id == i].iloc[0]
                     others.append((False, f"note {i} by {d.name(n.author_user_id)}: \"{n.text}\""))
                     res.evidence.append({"id": i, "type": "note", "label": ""})
-                    if producing is True and n.valid_to:
+                    if producing is True and isinstance(n.valid_to, str):
                         others.append((False, f"note {i} expects a return around {fmt_day(n.valid_to)}"))
         agrees = [s for v, s in others if data_state is not None and v == data_state]
         disagrees = [s for v, s in others if producing is not None and v != producing and s not in agrees]
@@ -223,6 +230,13 @@ class Ledger:
                                   "b": "; ".join(disagrees), "ask": "Both statements are kept; please confirm which is right."})
         return res
 
+    def prefs(self, user_id) -> dict:
+        out = {}
+        for f in self.facts():
+            if f["kind"] == "preference" and f["scope_id"] == user_id:
+                out[f["field"]] = f["value"]
+        return out
+
     def planned_downtime(self, well) -> Result:
         d = self.data()
         res = Result("planned_downtime", f"Planned downtime for {well}")
@@ -233,7 +247,7 @@ class Ledger:
                 res.evidence.append({"id": f["id"], "type": "ledger", "label": d.name(f["author_id"])})
         ops = Ops(d)
         for _, n in d.notes[(d.notes.asset_id == well) & (d.notes.note_type != "correction")].iterrows():
-            if n.valid_to and n.valid_to >= d.today.isoformat() and re.search(r"shut|planned|workover|down", n.text, re.I):
+            if isinstance(n.valid_to, str) and n.valid_to >= d.today.isoformat() and re.search(r"shut|planned|workover|down", n.text, re.I):
                 res.rows.append({"From": fmt_day(n.valid_from), "Until": fmt_day(n.valid_to), "What": n.text, "Source": f"note {n.note_id} by {d.name(n.author_user_id)}"})
                 res.evidence.append({"id": n.note_id, "type": "note", "label": ""})
         for _, m in d.mnt[(d.mnt.asset_id == well) & (d.mnt.started_at_dt.dt.date >= d.today) & (d.mnt.maintenance_type == "scheduled")].iterrows():

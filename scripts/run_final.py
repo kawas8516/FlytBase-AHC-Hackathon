@@ -49,7 +49,7 @@ def main():
         ev = sorted({e["id"] for r in out["results"] for e in r["evidence"]})
         viz = [r["viz"]["type"] for r in out["results"]]
         md.append(f"\n## {it.get('id', i)}. {it.get('user', '')}: {it['question']}\n")
-        md.append(out["text"])
+        md.append(out.get("full_text") or out["text"])
         md.append(f"\n*Visual:* {', '.join(viz)} · *Plan:* `{json.dumps(out.get('plan', {}).get('steps'))}` · *{secs:.1f}s*")
         md.append(f"\n*Evidence:* {', '.join(ev[:40])}{' …' if len(ev) > 40 else ''}\n")
         js.append({"item": it, "answer": out, "secs": secs})

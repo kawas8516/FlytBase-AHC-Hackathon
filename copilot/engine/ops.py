@@ -80,9 +80,12 @@ class Ops:
     def valid_notes(self, aid, on: date) -> pd.DataFrame:
         n = self.d.notes
         n = n[(n.asset_id == aid) & (n.note_type != "correction")]
-        vf = pd.to_datetime(n.valid_from, errors="coerce").dt.date
-        vt = pd.to_datetime(n.valid_to, errors="coerce").dt.date
-        return n[(vf <= on) & (vt.isna() | (vt >= on))]
+        if n.empty:
+            return n
+        vf = pd.to_datetime(n.valid_from, errors="coerce")
+        vt = pd.to_datetime(n.valid_to, errors="coerce")
+        ts = pd.Timestamp(on)
+        return n[(vf <= ts) & (vt.isna() | (vt >= ts))]
 
     def explain_down(self, aid, row) -> dict:
         """Why a well is not producing at a given inspection. Order: open repair > valid note > ledger fact > inspector remark."""
@@ -103,7 +106,7 @@ class Ops:
                 reasons.append(f"Note {n.note_id} by {self.d.name(n.author_user_id)}: {n.text}")
                 refs.append(("note", n.note_id))
         for f in self.d.ov.well_facts:
-            if f.get("scope_id") == aid and f["kind"] == "shared_fact" and f.get("status") != "contradicted":
+            if f.get("scope_id") == aid and f["kind"] == "shared_fact" and f.get("field") == "producing" and f.get("status") != "contradicted":
                 vf = f.get("valid_from") and date.fromisoformat(f["valid_from"])
                 vt = f.get("valid_to") and date.fromisoformat(f["valid_to"])
                 if (not vf or vf <= day) and (not vt or vt >= day):
@@ -233,7 +236,7 @@ class Ops:
         return res
 
     # ------------------------------------------------------------------ downtime
-    def downtime(self, area=None, well_type=None, wells=None, start=None, end=None, top: int | None = None) -> Result:
+    def downtime(self, area=None, well_type=None, wells=None, start=None, end=None, top: int | None = None, why: bool = False) -> Result:
         d = self.d
         ids = self._scope_wells(area, well_type, wells)
         x = d.ins[d.ins.asset_id.isin(ids)]
@@ -262,8 +265,23 @@ class Ops:
                 self._ev(res, i, "inspection")
         res.rows = [{k: v for k, v in r.items()} for r in shown]
         for r in res.rows:
-            r["Not-producing inspections"] = ", ".join(r.pop("Inspections"))
-        res.columns = ["Well", "Type", "Downtime days", "Not-producing inspections"]
+            insp_ids = r.pop("Inspections")
+            r["Not-producing inspections"] = ", ".join(insp_ids)
+            if why:
+                reasons, refs = [], []
+                for iid in insp_ids:
+                    row = d.ins[d.ins.inspection_id == iid].iloc[0]
+                    ex = self.explain_down(r["Well"], row)
+                    for text, ref in zip(ex["reasons"], ex["refs"]):
+                        if text not in reasons:
+                            reasons.append(text)
+                            refs.append(ref)
+                    if not ex["reasons"] and ex["remark"] and f"Inspector: \"{ex['remark']}\"" not in reasons:
+                        reasons.append(f"Inspector: \"{ex['remark']}\"")
+                r["Why"] = "; ".join(reasons[:4]) if reasons else "No recorded reason for the stopped inspections"
+                for t, i in refs[:8]:
+                    self._ev(res, i, t)
+        res.columns = ["Well", "Type", "Downtime days"] + (["Why"] if why else ["Not-producing inspections"])
         res.viz = {"type": "bar" if len(shown) <= 12 else "table", "x": "Well", "y": "Downtime days"}
         res.facts.update({"window": [str(start), str(end)], "ranking": [(r["Well"], r["Downtime days"]) for r in shown]})
         return res
@@ -438,6 +456,9 @@ class Ops:
         # SR-01
         if reportable:
             lim = d.rule_value(None, "SR-01.major_deadline_hours" if major else "SR-01.deadline_hours", 24)
+            before = d.rule_value(None, "SR-01.legacy_before")
+            if not major and before and int(f"{disc:%Y%m%d}") < int(before):
+                lim = d.rule_value(None, "SR-01.legacy_deadline_hours", lim)
             filed = ev[ev.event_type == "spill_report_filed"]
             if not filed.empty:
                 h = float(filed.iloc[0].hours_to_report)
@@ -594,6 +615,94 @@ class Ops:
         res.columns = ["Well", "Date", "Inspection", "Barrels", "Status", "Detail"]
         res.viz = {"type": "table"}
         res.facts = {"count": len(res.rows), "wells": [r["Well"] for r in res.rows]}
+        return res
+
+    def regulator_events(self, area=None, well_type=None, wells=None, start=None, end=None, event_type=None, fines_only=False) -> Result:
+        d = self.d
+        ids = set(self._scope_wells(area, well_type, wells))
+        x = d.reg[d.reg.asset_id.isin(ids)]
+        if start:
+            x = x[x.date_dt.dt.date >= start]
+        if end:
+            x = x[x.date_dt.dt.date <= end]
+        if event_type:
+            x = x[x.event_type == event_type]
+        if fines_only:
+            x = x[x.fine_usd > 0]
+        res = Result("regulator_events", "Regulator events")
+        for _, r in x.sort_values("date_dt").iterrows():
+            res.rows.append({"Event": r.event_id, "Date": fmt_day(r.date_dt), "Well": r.asset_id, "Type": r.event_type.replace("_", " "),
+                             "Protocol": r.protocol_id or "", "Fine USD": float(r.fine_usd or 0), "Status": r.status, "Detail": r.detail})
+            self._ev(res, r.event_id, "regulatory")
+        res.columns = ["Event", "Date", "Well", "Type", "Protocol", "Fine USD", "Status", "Detail"]
+        res.viz = {"type": "table"}
+        res.facts = {"count": len(res.rows), "fines_usd": float(x.fine_usd.fillna(0).sum()),
+                     "open_fines_usd": float(x[x.status == "open"].fine_usd.fillna(0).sum()),
+                     "wells": sorted({r["Well"] for r in res.rows})}
+        return res
+
+    def repair_list(self, wells=None, area=None, start=None, end=None, kind=None, equipment=None, latest: int | None = None) -> Result:
+        d = self.d
+        ids = self._scope_wells(area, None, wells)
+        m = d.mnt[d.mnt.asset_id.isin(ids)]
+        if start:
+            m = m[m.started_at_dt.dt.date >= start]
+        if end:
+            m = m[m.started_at_dt.dt.date <= end]
+        if kind:
+            m = m[m.maintenance_type == kind]
+        if equipment:
+            m = m[m.equipment_kind == equipment]
+        m = m.sort_values("started_at_dt", ascending=False)
+        if latest:
+            m = m.head(latest)
+        res = Result("repair_list", "Repairs")
+        for _, r in m.iterrows():
+            ext = self._extracted(r.maintenance_id)
+            res.rows.append({"Repair": r.maintenance_id, "Well": r.asset_id, "Started": fmt_day(r.started_at_dt), "Type": r.maintenance_type,
+                             "Equipment": r.equipment_kind.replace("_", " "), "Issue": r.issue, "Action": r.action_taken,
+                             "Cost USD": float(r.cost_total or 0), "Root cause": ext.get("root_cause") or ""})
+            self._ev(res, r.maintenance_id, "maintenance")
+        res.columns = ["Repair", "Well", "Started", "Type", "Equipment", "Issue", "Cost USD", "Root cause"]
+        res.viz = {"type": "table"}
+        res.facts = {"count": len(res.rows), "total_usd": float(m.cost_total.fillna(0).sum()), "wells": sorted(set(m.asset_id))}
+        return res
+
+    def list_wells(self, area=None, well_type=None, wells=None) -> Result:
+        d = self.d
+        ids = self._scope_wells(area, well_type, wells)
+        w = d.wells[d.wells.asset_id.isin(ids)]
+        res = Result("list_wells", "Wells")
+        lat = d.latest()
+        for _, r in w.iterrows():
+            prod = None
+            if r.asset_id in lat.index:
+                prod = bool(lat.loc[r.asset_id].producing)
+            res.rows.append({"Well": r.asset_id, "Type": r.well_type, "Area": d.area_name.get(r.area_id), "Team": d.team_name.get(r.team_id),
+                             "In charge": d.name(r.in_charge_user_id), "Installed": str(r.installed_on)[:10],
+                             "Producing now": "yes" if prod else ("no" if prod is False else "unknown"), "Barrels": None, "lat": r.lat, "lon": r.lon})
+        res.columns = ["Well", "Type", "Area", "In charge", "Installed", "Producing now"]
+        res.viz = {"type": "table"}
+        res.facts = {"count": len(res.rows), "by_type": {t: int((w.well_type == t).sum()) for t in sorted(w.well_type.dropna().unique())}}
+        return res
+
+    def downtime_by_area(self, start=None, end=None) -> Result:
+        d = self.d
+        x = d.ins
+        if start:
+            x = x[x.day >= start]
+        if end:
+            x = x[x.day <= end]
+        down = x[~x.producing]
+        res = Result("downtime_by_area", "Downtime by area")
+        for aid, nm in sorted(d.area_name.items(), key=lambda kv: kv[1]):
+            n = int((down.area_id == aid).sum())
+            res.rows.append({"Area": nm, "Downtime days": 7 * n, "Wells": int((d.wells.area_id == aid).sum())})
+        res.columns = ["Area", "Downtime days", "Wells"]
+        res.viz = {"type": "bar", "x": "Area", "y": "Downtime days"}
+        res.facts = {"by_area": {r["Area"]: r["Downtime days"] for r in res.rows}}
+        res.proof.append({"step": "Downtime = 7 days per non-producing weekly inspection, summed per area.",
+                          "rule": {"doc": "Dataset Guide", "section": "Inspections", "quote": "every inspection in a period that finds the well not producing oil counts as 7 days of downtime"}})
         return res
 
     # ------------------------------------------------------------------ spill verdict (disagreeing notes)

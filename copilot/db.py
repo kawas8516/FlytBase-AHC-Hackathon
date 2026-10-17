@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users(user_id TEXT PRIMARY KEY, name TEXT, role TEXT,
 CREATE TABLE IF NOT EXISTS wells(
   asset_id TEXT PRIMARY KEY, name TEXT, well_type TEXT, area_id TEXT, team_id TEXT,
   in_charge_user_id TEXT, lat REAL, lon REAL, installed_on TEXT, recorded_status TEXT,
-  last_inspection_id TEXT, equipment_json TEXT);
+  last_inspection_id TEXT, equipment_json TEXT, status TEXT, decommissioned_on TEXT, history_json TEXT);
 CREATE TABLE IF NOT EXISTS inspections(
   inspection_id TEXT PRIMARY KEY, asset_id TEXT, inspected_at TEXT, inspector_user_id TEXT, method TEXT,
   ambient_temp_c REAL, wellhead_temp_c REAL, spill_detected INTEGER, spill_area_pct REAL,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS reg_events(
   related_inspection_id TEXT, hours_to_report REAL, detail TEXT, fine_usd REAL, status TEXT);
 CREATE TABLE IF NOT EXISTS notes(
   note_id TEXT PRIMARY KEY, asset_id TEXT, created_at TEXT, author_user_id TEXT, note_type TEXT,
-  inspection_id TEXT, text TEXT, valid_from TEXT, valid_to TEXT);
+  inspection_id TEXT, text TEXT, valid_from TEXT, valid_to TEXT, extra_json TEXT);
 CREATE TABLE IF NOT EXISTS docs(doc_id TEXT PRIMARY KEY, kind TEXT, path TEXT, title TEXT, text TEXT);
 CREATE TABLE IF NOT EXISTS reports(
   maintenance_id TEXT PRIMARY KEY, asset_id TEXT, path TEXT, text TEXT, extracted_json TEXT);

@@ -13,6 +13,7 @@ export function Viz({ r, onEvidence }: { r: Result; onEvidence: (id: string) => 
   if (t === "bar") return <BarV r={r} />;
   if (t === "map") return <MapV r={r} />;
   if (t === "heatmap") return <Heat r={r} />;
+  if (t === "stacked") return <Stacked r={r} />;
   if (t === "receipt") return <Receipt r={r} onEvidence={onEvidence} />;
   return <Table r={r} onEvidence={onEvidence} />;
 }
@@ -61,7 +62,7 @@ function StatusCard({ r, onEvidence }: { r: Result; onEvidence: (id: string) => 
       </div>
       <dl className="kv">
         <dt>Last inspection</dt><dd><button className="chip" onClick={() => onEvidence(c.last_inspection_id)}>{c.last_inspection_id}</button> {c.last_inspected} · {c.method} · {c.inspector}</dd>
-        <dt>Readings</dt><dd>{c.wellhead_temp_c} °C wellhead, {c.ambient_temp_c} °C air</dd>
+        <dt>Readings</dt><dd>{Number(c.wellhead_temp_c).toFixed(1)} °C wellhead, {Number(c.ambient_temp_c).toFixed(1)} °C air</dd>
         <dt>Recorded status</dt><dd className={c.status_stale ? "warntext" : ""}>{c.recorded_status}</dd>
         {c.reasons?.length ? <><dt>Why</dt><dd>{c.reasons.join("; ")}</dd></> : null}
         {c.inspector_remark ? <><dt>Inspector</dt><dd>"{c.inspector_remark}"</dd></> : null}
@@ -108,10 +109,10 @@ function Line13({ r }: { r: Result }) {
           <YAxis unit="°C" tick={{ fontSize: 11 }} />
           <Tooltip />
           <Legend />
-          <Line dataKey="wellhead_temp_c" name="Wellhead" stroke={C.well} strokeWidth={2} dot={{ r: 3 }} />
-          <Line dataKey="ambient_temp_c" name="Air" stroke={C.air} strokeWidth={2} dot={false} />
-          {data.filter((d) => !d.producing).map((d) => (
-            <ReferenceDot key={d.label} x={d.label} y={d.wellhead_temp_c} r={7} fill={C.down} stroke="#fff" label={{ value: "not producing", position: "top", fontSize: 10, fill: C.down }} />
+          <Line dataKey="wellhead_temp_c" name="Wellhead" stroke={C.well} strokeWidth={2} dot={{ r: 3 }} isAnimationActive={false} />
+          <Line dataKey="ambient_temp_c" name="Air" stroke={C.air} strokeWidth={2} dot={false} isAnimationActive={false} />
+          {data.filter((d) => !d.producing).map((d, i) => (
+            <ReferenceDot key={d.label} x={d.label} y={d.wellhead_temp_c} r={7} fill={C.down} stroke="#fff" ifOverflow="visible" label={i === 0 ? { value: "not producing", position: "top", fontSize: 10, fill: C.down } : undefined} />
           ))}
         </LineChart>
       </ResponsiveContainer>
@@ -130,7 +131,26 @@ function BarV({ r }: { r: Result }) {
           <XAxis dataKey={x} tick={{ fontSize: 11 }} />
           <YAxis tick={{ fontSize: 11 }} />
           <Tooltip />
-          <Bar dataKey={y} fill={C.bar} radius={[4, 4, 0, 0]} label={{ position: "top", fontSize: 11 }} />
+          <Bar dataKey={y} fill={C.bar} radius={[4, 4, 0, 0]} label={{ position: "top", fontSize: 11 }} isAnimationActive={false} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+const STACK = ["#0f766e", "#c2410c", "#2563eb", "#7c3aed"];
+function Stacked({ r }: { r: Result }) {
+  const series: string[] = r.viz.series || [];
+  return (
+    <div className="chart">
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={r.rows} margin={{ top: 20, right: 20, bottom: 10, left: 0 }}>
+          <CartesianGrid stroke="#e7e5e4" vertical={false} />
+          <XAxis dataKey={r.viz.x || "Area"} tick={{ fontSize: 11 }} />
+          <YAxis allowDecimals={false} tick={{ fontSize: 11 }} label={{ value: "jobs", angle: -90, position: "insideLeft", fontSize: 11 }} />
+          <Tooltip />
+          <Legend />
+          {series.map((s, i) => <Bar key={s} dataKey={s} stackId="a" fill={STACK[i % STACK.length]} isAnimationActive={false} />)}
         </BarChart>
       </ResponsiveContainer>
     </div>
@@ -187,7 +207,7 @@ function Receipt({ r, onEvidence }: { r: Result; onEvidence: (id: string) => voi
       {r.rows.map((row, i) => (
         <dl className="kv" key={i}>
           {Object.entries(row).map(([k, v]) => (
-            <><dt key={k}>{k}</dt><dd key={k + "v"}><Cell v={v} onEvidence={onEvidence} /></dd></>
+            <><dt key={k}>{k}</dt><dd key={k + "v"} className={k.startsWith("Original") ? "was" : k.startsWith("Corrected") || k === "New value" ? "now" : ""}><Cell v={v} onEvidence={onEvidence} /></dd></>
           ))}
         </dl>
       ))}

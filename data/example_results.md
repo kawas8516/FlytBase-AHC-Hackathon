@@ -10,7 +10,7 @@
 - Inspector's remark: "Pump jack not moving."
 - The recorded status still says active, which is out of date.
 
-*Visual:* card · *Plan:* `[{"operation": "well_status", "wells": ["WELL-0001"]}]` · *1.0s*
+*Visual:* card · *Plan:* `[{"operation": "well_status", "wells": ["WELL-0001"]}]` · *0.8s*
 
 *Evidence:* CTX-0001-003, INS-0001-0203, T200 9.3 Production temperature rule
 
@@ -112,13 +112,25 @@
 
 ## Q10. Michael Turner: In Southwest Block 24, which spills in the last 90 days were not contained within the SOP time limit?
 
-**2 spills: WELL-0082 and WELL-0100.**
-- WELL-0082 (INS-0082-0198, 10 Sep 2026, 0.7 bbl): Contained after about 7.1 hours (limit 4); found only in report MNT-0082-028
-- WELL-0100 (INS-0100-0196, 10 Sep 2026, 0.4 bbl): Contained after about 8.1 hours (limit 4); found only in report MNT-0100-034
+- **spill-response-sop#4. Protocols**: 4. Protocols
+| Protocol ID | Requirement |
+|---|---|
+| **SR-01** | For a **reportable or major** spill, phone the State Oil & Gas Commission immediately, then file the **written notice** (volume, affected area, cleanup plan) within **24 hours** of discovery, or within **2 hours** for a major spill. Discovery time is the time of the inspection that detected the spill. `hours_to_report` in the data 
+- **regulatory-compliance-sop#2. Protocols**: 2. Protocols
+| Protocol ID | Requirement | Evidence in the data |
+|---|---|---|
+| **RC-01** | Every well must be inspected at least once every **14 days**. | `inspections.jsonl` timestamps |
+| **RC-02** | Every flowline must pass an **integrity test once per calendar year**. | `maintenance.jsonl` entries with issue "Annual flowline integrity test" |
+| **RC-03** | Any well down for more than **14 c
+- **field-work-sop#3. Protocols**: 3. Protocols
+| Protocol ID | Requirement |
+|---|---|
+| **WS-01** | Hold and record a **pre-job safety meeting** (job safety analysis) with the whole crew before any work starts. |
+| **WS-02** | **Isolate energy** before touching moving or pressurised equipment. Stop the prime mover at the bottom of the stroke, set and chain the brake, lock and tag the motor disconnect, close and tag the wellhead w
 
-*Visual:* table · *Plan:* `[{"operation": "spills_check", "area": "Southwest Block 24", "protocol": "SR-02", "period": "last 90 days (19 Jul 2026 to 16 Oct 2026)"}]` · *0.1s*
+*Visual:* text · *Plan:* `[{"operation": "search_docs", "area": "Southwest Block 24", "period": "last 90 days (19 Jul 2026 to 16 Oct 2026)"}]` · *57.4s*
 
-*Evidence:* INS-0082-0198, INS-0100-0196, MNT-0082-028, MNT-0100-034, spill-response-sop SR-02
+*Evidence:* field-work-sop#3. Protocols, regulatory-compliance-sop#2. Protocols, spill-response-sop#4. Protocols
 
 
 ## Q6/Q11 day 1. Michael Turner: Which 3 wells in Northeast Block 7 had the most downtime in the last 4 months? Show a bar chart.
@@ -149,7 +161,7 @@
   - Michael Turner, please confirm: the inspector's note disagrees with the corrected reading.
 - With 41 °C against 19.9 °C air (21.1 °C warmer, above the T200 limit of 15 °C), WELL-0164 is producing oil.
 
-*Visual:* receipt · *Plan:* `[]` · *0.9s*
+*Visual:* receipt · *Plan:* `[]` · *0.8s*
 
 *Evidence:* INS-0164-0205, LDG-0001, T200 9.3 Production temperature rule
 
@@ -177,7 +189,7 @@
 - SR-03: Clean-up verification due by 23 Nov 2026
 - report: Report MNT-0151-025 classed the spill as "moderate" and listed no reporting duty; with the current volume (5.4 bbl) it is reportable, so that no longer holds
 
-*Visual:* receipt · *Plan:* `[]` · *1.7s*
+*Visual:* receipt · *Plan:* `[]` · *0.8s*
 
 *Evidence:* INS-0151-0201, LDG-0002, MNT-0151-025, spill-response-sop SR-01, spill-response-sop SR-03
 
@@ -189,7 +201,7 @@
 - WELL-0121 (T200): 3 corrective pump jack repairs in 12 months (MNT-0121-031, MNT-0121-034, MNT-0121-035); rule: T200 manual (3).
 - WELL-0138 (T350): 3 corrective pump jack repairs in 12 months (MNT-0138-031, MNT-0138-032, MNT-0138-034); rule: T350 manual (3).
 
-*Visual:* table · *Plan:* `[{"operation": "rca_due", "area": "Northeast Block 7", "equipment": "pump_jack"}]` · *0.6s*
+*Visual:* table · *Plan:* `[{"operation": "rca_due", "area": "Northeast Block 7", "equipment": "pump_jack"}]` · *0.3s*
 
 *Evidence:* MNT-0108-024, MNT-0108-026, MNT-0108-028, MNT-0121-031, MNT-0121-034, MNT-0121-035, MNT-0138-031, MNT-0138-032, MNT-0138-034, T200 10. Maintenance escalation, T350 6. Maintenance escalation
 
@@ -214,7 +226,7 @@
 - WELL-0138 (T350): 3 corrective pump jack repairs in 12 months (MNT-0138-031, MNT-0138-032, MNT-0138-034); rule: Michael Turner's rule for T350 (2).
 - WELL-0120 (T350, 2 repairs) is included because of Michael Turner's rule for T350 (2), not the manual.
 
-*Visual:* table · *Plan:* `[{"operation": "rca_due", "area": "Northeast Block 7", "equipment": "pump_jack"}]` · *2.3s*
+*Visual:* table · *Plan:* `[{"operation": "rca_due", "area": "Northeast Block 7", "equipment": "pump_jack"}]` · *1.2s*
 
 *Evidence:* LDG-0003, MNT-0108-024, MNT-0108-026, MNT-0108-028, MNT-0120-025, MNT-0120-030, MNT-0121-031, MNT-0121-034, MNT-0121-035, MNT-0138-031, MNT-0138-032, MNT-0138-034, T200 10. Maintenance escalation, T350 6. Maintenance escalation
 
@@ -241,7 +253,7 @@
 - INS-0151-0201 volume corrected by Michael Turner from 4.5 to 5.4 bbl.
 - Reportable means 5 bbl or more (Spill Response SOP §3); no other spill in the period reached it.
 
-*Visual:* table · *Plan:* `[{"operation": "spills_check", "area": "Northeast Block 8", "protocol": "SR-01", "period": "last 90 days (19 Jul 2026 to 16 Oct 2026)"}]` · *0.2s*
+*Visual:* table · *Plan:* `[{"operation": "spills_check", "area": "Northeast Block 8", "protocol": "SR-01", "period": "last 90 days (19 Jul 2026 to 16 Oct 2026)"}]` · *0.1s*
 
 *Evidence:* INS-0151-0201, LDG-0002, spill-response-sop SR-01
 
@@ -261,7 +273,7 @@
 **Yes.**
 - From 17 Oct 2026 until 27 Oct 2026: FYI for everyone: WELL-0007 will be shut in from 17 Oct for a 10-day planned workover. (source: Jake Morales (LDG-0004, reported))
 
-*Visual:* table · *Plan:* `[{"operation": "planned_downtime", "wells": ["WELL-0007"]}]` · *1.8s*
+*Visual:* table · *Plan:* `[{"operation": "planned_downtime", "wells": ["WELL-0007"]}]` · *0.8s*
 
 *Evidence:* LDG-0004
 
@@ -293,7 +305,7 @@
   - The data matches: Michael Turner: "WELL-0175 has been shut in for planned work since 14 Oct." (LDG-0005, corroborated)
   - Tyler Hughes, can you confirm? Your statement is kept on record as unconfirmed.
 
-*Visual:* receipt · *Plan:* `[]` · *1.8s*
+*Visual:* receipt · *Plan:* `[]` · *0.9s*
 
 *Evidence:* INS-0175-0204, LDG-0006
 
@@ -306,7 +318,7 @@
   - The data matches: note CTX-0001-003 by Jake Morales: "Well shut in from 7 Oct for planned rod string replacement. Work order not yet in the maintenance system. Expected back online around 20 Oct." and note CTX-0001-003 expects a return around 20 Oct 2026
   - Jake Morales, can you confirm? Your statement is kept on record as unconfirmed.
 
-*Visual:* receipt · *Plan:* `[]` · *1.9s*
+*Visual:* receipt · *Plan:* `[]` · *0.9s*
 
 *Evidence:* CTX-0001-003, INS-0001-0203, LDG-0007
 
@@ -317,6 +329,6 @@
 - **People disagree:** Ryan Brooks (field inspector, CTX-0101-002): "Inspection INS-0101-0197: I think this was only produced water, not crude."; Chris Dalton (hse officer, CTX-0101-003): "Inspection INS-0101-0197: sampled the stain, it is crude oil. The detection stands."
 - Neither note is a formal correction, and spill repair MNT-0101-029 was done, so the detection stands.
 
-*Visual:* card · *Plan:* `[{"operation": "spill_verdict", "wells": ["WELL-0101"], "date": "2026-08-20"}]` · *1.8s*
+*Visual:* card · *Plan:* `[{"operation": "spill_verdict", "wells": ["WELL-0101"], "date": "2026-08-20"}]` · *0.8s*
 
 *Evidence:* CTX-0101-002, CTX-0101-003, INS-0101-0197, MNT-0101-029

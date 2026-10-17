@@ -73,7 +73,16 @@ def ask(body: Ask):
 @app.get("/api/ledger")
 def ledger():
     d = bot.ledger.data()
-    return [{**f, "author": d.name(f["author_id"])} for f in reversed(bot.ledger.facts())]
+    return [{**f, "author": d.name(f["author_id"])} for f in reversed(bot.ledger.facts()) if f["kind"] != "preference"]
+
+
+@app.get("/api/memory")
+def memory(user_id: str):
+    """This user's own earlier result sets (private memory). Filtered by user_id in SQL."""
+    rows = bot.ledger.con.execute(
+        "SELECT id, session_date, question, op, entity_ids FROM result_sets WHERE user_id=? ORDER BY session_date DESC, id DESC LIMIT 40",
+        (user_id,)).fetchall()
+    return [{**dict(r), "entity_ids": json.loads(r["entity_ids"])} for r in rows]
 
 
 @app.post("/api/reset")

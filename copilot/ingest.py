@@ -74,11 +74,12 @@ def ingest_well(con, wdir: Path):
     aid = meta["asset_id"]
     loc = meta.get("location") or {}
     last = meta.get("last_inspection") or {}
-    con.execute("INSERT OR REPLACE INTO wells VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (
+    con.execute("INSERT OR REPLACE INTO wells VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (
         aid, meta.get("name"), meta.get("well_type"), meta.get("area_id"), meta.get("team_id"),
         meta.get("in_charge_user_id"), loc.get("lat"), loc.get("lon"), meta.get("installed_on"),
         meta.get("recorded_status"), last.get("inspection_id") if isinstance(last, dict) else last,
-        json.dumps(meta.get("equipment", []))))
+        json.dumps(meta.get("equipment", [])), meta.get("status"), meta.get("decommissioned_on"),
+        json.dumps({"type_history": meta.get("type_history"), "team_history": meta.get("team_history")})))
     n = 0
     for r in _jsonl(wdir / "inspections.jsonl"):
         con.execute("INSERT OR REPLACE INTO inspections VALUES (?,?,?,?,?,?,?,?,?,?,?,?)", (
@@ -110,9 +111,10 @@ def ingest_well(con, wdir: Path):
             r.get("related_inspection_id"), r.get("hours_to_report"), r.get("detail"),
             r.get("fine_usd") or 0, r.get("status")))
     for r in _jsonl(wdir / "context.jsonl"):
-        con.execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?)", (
+        extra = {k: r[k] for k in ("field", "original_value", "corrected_value") if k in r}
+        con.execute("INSERT OR REPLACE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?)", (
             r["note_id"], aid, r.get("created_at"), r.get("author_user_id"), r.get("note_type"),
-            r.get("inspection_id"), r.get("text"), r.get("valid_from"), r.get("valid_to")))
+            r.get("inspection_id"), r.get("text"), r.get("valid_from"), r.get("valid_to"), json.dumps(extra) if extra else None))
         con.execute("DELETE FROM chunks WHERE ref=?", (r["note_id"],))
         con.execute("INSERT INTO chunks(ref,kind,asset_id,title,text) VALUES (?,?,?,?,?)",
                     (r["note_id"], "note", aid, f"Note {r['note_id']}", r.get("text") or ""))

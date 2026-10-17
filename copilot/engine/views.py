@@ -80,8 +80,18 @@ class Data:
         ins["orig_volume_bbl"] = ins.spill_est_volume_bbl
         ins["corrections"] = [[] for _ in range(len(ins))]
         idx = {k: i for i, k in enumerate(ins.inspection_id)}
-        # runtime ledger corrections (raw data or AI analysis)
-        for c in self.ov.data_corrections:
+        # dataset data_correction notes (one field of one inspection) behave exactly like ledger corrections
+        dc = []
+        for _, n in self.notes[self.notes.note_type == "data_correction"].iterrows():
+            try:
+                x = json.loads(n.extra_json or "{}")
+            except (TypeError, ValueError):
+                x = {}
+            if n.inspection_id and x.get("field") and x.get("corrected_value") is not None:
+                dc.append({"id": n.note_id, "target": n.inspection_id, "field": x["field"], "original": x.get("original_value"),
+                           "value": x["corrected_value"], "author_id": n.author_user_id,
+                           "author_name": self.user_name.get(n.author_user_id, n.author_user_id), "reason": n.text, "source": "dataset"})
+        for c in dc + list(self.ov.data_corrections):
             i = idx.get(c["target"])
             if i is None:
                 continue
@@ -90,6 +100,24 @@ class Data:
             if col:
                 ins.at[i, col] = c["value"]
                 ins.at[i, "corrections"].append(c)
+        # a well's type can change over time (type_history): use the type in force on the reading's date
+        ins["current_type"] = ins.well_type
+        if "history_json" in self.wells:
+            for aid, hj in zip(self.wells.asset_id, self.wells.history_json):
+                try:
+                    th = (json.loads(hj or "{}") or {}).get("type_history") or []
+                except (TypeError, ValueError):
+                    th = []
+                if len(th) < 2:
+                    continue
+                rows = ins.asset_id == aid
+                for seg in th:
+                    f = pd.to_datetime(seg.get("from"), errors="coerce")
+                    to = pd.to_datetime(seg.get("to"), errors="coerce")
+                    m = rows & (ins.ts.dt.tz_localize(None) >= f) if pd.notna(f) else rows
+                    if pd.notna(to):
+                        m = m & (ins.ts.dt.tz_localize(None) < to + pd.Timedelta(days=1))
+                    ins.loc[m, "well_type"] = seg.get("well_type")
         thr = {t: self.rule_value(t, "producing_delta_c") for t in ins.well_type.dropna().unique()}
         ins["threshold_c"] = ins.well_type.map(thr)
         ins["delta_c"] = (ins.wellhead_temp_c - ins.ambient_temp_c).round(2)
@@ -106,7 +134,11 @@ class Data:
     def latest(self) -> pd.DataFrame:
         """'Right now' = each well's latest inspection on or before today."""
         cur = self.ins[self.ins.day <= self.today]
-        return cur.groupby("asset_id").tail(1).set_index("asset_id")
+        if "status" in self.wells:
+            plugged = set(self.wells[self.wells.status.fillna("").str.contains("plugged") |
+                                     self.wells.recorded_status.fillna("").str.contains("plugged")].asset_id)
+            cur = cur[~cur.asset_id.isin(plugged)]
+        return cur.sort_values("ts").groupby("asset_id").tail(1).set_index("asset_id")
 
     # ---------- helpers ----------
     def name(self, uid):

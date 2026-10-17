@@ -71,6 +71,11 @@ def parse_sop(doc_id: str, text: str):
                 out.append((f"{pid}.deadline_hours", float(hrs[0]), "hours", pid, flat))
                 if len(hrs) > 1:
                     out.append((f"{pid}.major_deadline_hours", float(hrs[1]), "hours", pid, flat))
+            lg = re.search(r"\((\d+) hours? for spills discovered before (\d{1,2}) (\w{3})\w* (\d{4})\)", flat, re.I)
+            if lg:
+                mon = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"].index(lg.group(3).lower()) + 1
+                out.append((f"{pid}.legacy_deadline_hours", float(lg.group(1)), "hours", pid, flat))
+                out.append((f"{pid}.legacy_before", float(f"{lg.group(4)}{mon:02d}{int(lg.group(2)):02d}"), "yyyymmdd", pid, flat))
             for pat, key, unit in (
                 (r"within (\d+) days", "deadline_days", "days"),
                 (r"every (\d+) days", "interval_days", "days"),

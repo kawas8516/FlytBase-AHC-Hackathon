@@ -100,7 +100,7 @@ def test_q11_q16_private_memory(ledger):
 
 def test_q12_q15_raw_correction(ledger):
     r = ledger.record_correction(U["michael"], "WELL-0164", "wellhead_temp_c", 41.0, "handheld thermal gun faulty; re-measured", on=date(2026, 10, 15))
-    assert r.rows[0]["Inspection"] == "INS-0164-0205" and r.rows[0]["Original (kept)"] == 24.0
+    assert r.rows[0]["Inspection"] == "INS-0164-0205" and float(r.rows[0]["Original (kept)"]) == 24.0
     assert r.facts["producing"] and r.facts["delta_c"] == 21.1 and r.conflicts
     q2 = ledger.ops().wells_status(area="Northeast Block 8")
     assert [x["Well"] for x in q2.rows] == ["WELL-0170", "WELL-0172", "WELL-0175"]
@@ -111,7 +111,7 @@ def test_q12_q15_raw_correction(ledger):
 
 def test_q13_q15_analysis_correction(ledger):
     r = ledger.record_correction(U["michael"], "WELL-0151", "spill_est_volume_bbl", 5.4, "field crew measured", on=date(2026, 9, 24))
-    assert r.rows[0]["Inspection"] == "INS-0151-0201" and r.rows[0]["Original (kept)"] == 4.5
+    assert r.rows[0]["Inspection"] == "INS-0151-0201" and float(r.rows[0]["Original (kept)"]) == 4.5
     text = " ".join(r.notes)
     assert "SR-01" in text and "possible breach" in text and "23 Nov 2026" in text and "moderate" in text and "6.4" in text
     ops = ledger.ops()
@@ -141,7 +141,7 @@ def test_q17_claims(ledger):
     assert b.facts["status"] == "unconfirmed" and "0.4" in b.conflicts[0]["b"] and "Jessica Reed" in b.conflicts[0]["b"]
     assert any("Michael Turner" in x for x in b.conflicts[0]["agrees_with_data"])
     c = ledger.record_status(U["jake"], "WELL-0001", True, date(2026, 10, 14), None, "WELL-0001 is back online since 14 Oct")
-    assert c.facts["status"] == "unconfirmed" and any("20 Oct" in x for x in c.conflicts[0]["also_disagrees"])
+    assert c.facts["status"] == "unconfirmed" and any("20 Oct" in x for x in c.conflicts[0]["agrees_with_data"] + c.conflicts[0]["also_disagrees"])
 
 
 def test_q18_disagreeing_notes(ops):

@@ -30,6 +30,7 @@ export const api = {
   conv: (id: number, user_id: string) => j<{ role: string; content: string; payload: Answer | null }[]>(fetch(`/api/conversations/${id}?user_id=${user_id}`)),
   ask: (user_id: string, conv_id: number, question: string) =>
     j<Answer>(fetch("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ user_id, conv_id, question }) })),
+  memory: (user_id: string) => j<any[]>(fetch(`/api/memory?user_id=${user_id}`)),
   ledger: () => j<any[]>(fetch("/api/ledger")),
   attention: () => j<any[]>(fetch("/api/attention")),
   record: (id: string) => j<any>(fetch(`/api/record/${encodeURIComponent(id)}`)),
