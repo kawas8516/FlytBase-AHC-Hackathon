@@ -1,0 +1,15 @@
+INFO:     Started server process [17648]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:58602 - "GET /api/meta HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64645 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64645 - "GET /assets/index-BZNzuagm.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52775 - "GET /assets/index-aN6H0V-h.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61952 - "GET /vite.svg HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50559 - "GET /api/conversations?user_id=U-201 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64645 - "GET /api/meta HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59132 - "GET /api/meta HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58604 - "GET /api/attention HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52775 - "GET /api/attention HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53401 - "GET /api/attention HTTP/1.1" 200 OK

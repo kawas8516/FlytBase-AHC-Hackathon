@@ -146,7 +146,7 @@ class Ledger:
             res.facts = {"class": ops.d.spill_class(float(value)), "volume": float(value)}
             for c in ops.spill_compliance(new):
                 if c["status"] in ("breach", "pending", "stale"):
-                    res.notes.append(f"{c['protocol']}: {c['detail']}" + (" — possible breach" if c["status"] == "breach" and c["protocol"] == "SR-01" else ""))
+                    res.notes.append(f"{c['protocol']}: {c['detail']}" + "")
                     for ref in c["refs"]:
                         res.evidence.append({"id": ref, "type": "maintenance" if ref.startswith("MNT") else "regulatory", "label": ""})
             for p in ("SR-01", "SR-03"):
@@ -202,7 +202,7 @@ class Ledger:
                     if producing is True and n.valid_to:
                         others.append((False, f"note {i} expects a return around {fmt_day(n.valid_to)}"))
         agrees = [s for v, s in others if data_state is not None and v == data_state]
-        disagrees = [s for v, s in others if producing is not None and v != producing]
+        disagrees = [s for v, s in others if producing is not None and v != producing and s not in agrees]
         status = "unconfirmed" if verdict == "contradicted" else ("corroborated" if verdict == "corroborated" else "reported")
         kind = "shared_fact" if verdict != "contradicted" and shared else "claim"
         fid = self._add(kind=kind, scope_type="well", scope_id=well, field="producing", value=producing,
@@ -287,8 +287,7 @@ class Ledger:
         for r in rows:
             r["entity_ids"] = json.loads(r["entity_ids"])
         if count:
-            exact = [r for r in rows if len(r["entity_ids"]) == count]
-            rows = exact or rows
+            rows = [r for r in rows if len(r["entity_ids"]) == count]
         return rows
 
     def conversations(self, user_id):
