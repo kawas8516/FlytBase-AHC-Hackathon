@@ -77,13 +77,13 @@ const rows = [
 
 const page2 = [
   new Paragraph({ pageBreakBefore: true, spacing: { after: 20 }, children: [t("Results on the final questions", { bold: true, size: 32 })] }),
-  p([["Page 2 of 2.", { bold: true }], " Test dataset: 600 wells, today = 15 Jan 2027. All 21 turns ran in one pass in under a minute; none needed the language model. Full answers with evidence IDs are in results_final.md."], { color: "57534E", after: 60 }),
+  p([["Page 2 of 2.", { bold: true }], " Test dataset: 600 wells, today = 15 Jan 2027. All 21 turns ran in one pass in under a minute; none needed the language model. Q3 to Q6 were recomputed by a separate script straight from the raw files (scripts/oracle_final.py) and match exactly. Full answers with evidence IDs are in results_final.md. Code: MIT licence."], { color: "57534E", after: 60 }),
   new Table({
     width: { size: W, type: WidthType.DXA }, columnWidths: cols,
     rows: rows.map((r, i) => row(i === 0 ? r[0] : [[r[0], { bold: true }]], r[1], r[2], i === 0)),
   }),
   h("What did not work, and why"),
-  p("Gemma is slow (median about 30 s per call) and sometimes errors, so every question that matters is answered by deterministic operators; free-form questions outside the operators fall back to document search or SQL and are slower and less reliable. Q10's reasons are limited to what notes record. Q7's ranking and Q11's comparison are judgement calls whose method and caveats are stated in the answer. Where the data cannot answer (Q1, Q2, Q9 H2S) the copilot says so rather than guessing."),
+  p("Gemma is slow (median about 30 s per call) and sometimes errors, so every question that matters is answered by deterministic operators; free-form questions outside the operators fall back to document search or SQL and are slower and less reliable. Q10's reasons are limited to what notes record. One well (WELL-0010) changed type mid-history; readings now use the type in force on their date. Q7's ranking and Q11's comparison are judgement calls whose method and caveats are stated in the answer. Where the data cannot answer (Q1, Q2, Q9 H2S) the copilot says so rather than guessing."),
 ];
 
 const doc = new Document({

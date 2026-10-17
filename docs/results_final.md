@@ -12,7 +12,7 @@
 - What exists: wellhead and air temperature, spill detections, repairs and costs, regulator events, notes, manuals/SOPs. A pressure map would need downhole or wellhead pressure gauges added to the inspections.
 - Closest honest proxy: which wells are producing right now (temperature rule) can be shown on a map if useful.
 
-*Visual:* text · *Plan:* `[{"operation": "data_gap"}]` · *2.7s*
+*Visual:* text · *Plan:* `[{"operation": "data_gap"}]` · *2.5s*
 
 *Evidence:* Dataset Guide, T200 9.1
 
@@ -142,7 +142,7 @@
 - Well: WELL-0219; Area: Southeast Block 31; Operator-note evidence: 05 Jan: "WELL-0219 drive tripping on underload, restarted from the panel."; 13 Jan: "Drive on WELL-0219 showing amps hunting between 38 and 44 A."; Other warning signs in the data: wellhead gap falling (33.2 → 4.5 °C above air); not producing at latest inspection; 2 corrective repairs in 12 months; Last repair on the well: MNT-0219-022, 24 Nov 2026: Scheduled wellhead valve service; Score: 14; Rank: 10
 - Notes from the last 30 days that describe abnormal sound or behaviour (fluid pound, rattling, squeal, tagging bottom, amps hunting, drive tripping, leaks); excluding gas and bypass notes and wells repaired since. Ranked by how many and how serious the notes are, plus other signs in the data. This is a judgement ranking, not a prediction model.
 
-*Visual:* table · *Plan:* `[{"operation": "listen_ranking"}]` · *4.0s*
+*Visual:* table · *Plan:* `[{"operation": "listen_ranking"}]` · *3.8s*
 
 *Evidence:* CTX-0005-004, CTX-0005-005, CTX-0005-006, CTX-0010-005, CTX-0010-006, CTX-0010-007, CTX-0020-006, CTX-0020-007, CTX-0020-008, CTX-0021-005, CTX-0025-002, CTX-0025-003, CTX-0030-001, CTX-0030-002, CTX-0030-004, CTX-0032-005, CTX-0042-001, CTX-0042-003, CTX-0043-004, CTX-0043-005, CTX-0043-006, CTX-0044-006, CTX-0044-007, CTX-0044-008, CTX-0051-003, CTX-0054-006, CTX-0061-004, CTX-0061-005, CTX-0062-006, CTX-0065-004, CTX-0076-005, CTX-0076-006, CTX-0076-008, CTX-0080-005, CTX-0083-004, CTX-0089-001, CTX-0094-006, CTX-0097-002, CTX-0097-003, CTX-0098-004 …
 
@@ -156,7 +156,7 @@
 - Chosen from the ranking above: WELL-0010: wellhead gap falling (30.0 → 17.5 °C above air); not producing at latest inspection; 4 corrective repairs in 12 months; WELL-0263: wellhead gap falling (32.7 → 4.0 °C above air); not producing at latest inspection; 4 corrective repairs in 12 months; recalled pump lot LOT-2410-B still installed; WELL-0175: wellhead gap falling (28.9 → 5.5 °C above air); not producing at latest inspection; 3 corrective repairs in 12 months
 - Notes from the last 30 days that describe abnormal sound or behaviour (fluid pound, rattling, squeal, tagging bottom, amps hunting, drive tripping, leaks); excluding gas and bypass notes and wells repaired since. Ranked by how many and how serious the notes are, plus other signs in the data. This is a judgement ranking, not a prediction model.
 
-*Visual:* table · *Plan:* `[{"operation": "listen_ranking", "top": 3}]` · *4.0s*
+*Visual:* table · *Plan:* `[{"operation": "listen_ranking", "top": 3}]` · *3.8s*
 
 *Evidence:* CTX-0005-004, CTX-0005-005, CTX-0005-006, CTX-0010-005, CTX-0010-006, CTX-0010-007, CTX-0020-006, CTX-0020-007, CTX-0020-008, CTX-0021-005, CTX-0025-002, CTX-0025-003, CTX-0030-001, CTX-0030-002, CTX-0030-004, CTX-0032-005, CTX-0042-001, CTX-0042-003, CTX-0043-004, CTX-0043-005, CTX-0043-006, CTX-0044-006, CTX-0044-007, CTX-0044-008, CTX-0051-003, CTX-0054-006, CTX-0061-004, CTX-0061-005, CTX-0062-006, CTX-0065-004, CTX-0076-005, CTX-0076-006, CTX-0076-008, CTX-0080-005, CTX-0083-004, CTX-0089-001, CTX-0094-006, CTX-0097-002, CTX-0097-003, CTX-0098-004 …
 
@@ -179,7 +179,7 @@
 - Preference: Show costs in; Value: thousands of dollars; Applies to: you only
 - Saved as a private preference. Other users' answers are not affected, and it is not shown in the shared ledger.
 
-*Visual:* receipt · *Plan:* `[{"operation": "save_preference"}]` · *2.6s*
+*Visual:* receipt · *Plan:* `[{"operation": "save_preference"}]` · *2.5s*
 
 *Evidence:* LDG-0002, LDG-0003
 
@@ -198,7 +198,7 @@
 - Recall notice HPC-RN-2026-07 (1 Dec 2026): Highline RP-175 pumps from lots LOT-2409-A, LOT-2409-C, LOT-2410-B; replace by 31 Dec 2026, now overdue. Current pump per well = the latest 'Parts installed' line in its repair reports.
 - WELL-0333: counted as replaced on the word of Nathan Pierce (LDG-0001, 2027-01-15); work order not yet in the maintenance system
 
-*Visual:* table · *Plan:* `[{"operation": "recalled_pumps"}]` · *2.8s*
+*Visual:* table · *Plan:* `[{"operation": "recalled_pumps"}]` · *2.7s*
 
 *Evidence:* MNT-0031-027, MNT-0156-027, MNT-0160-028, MNT-0263-033, MNT-0305-032, MNT-0426-030, MNT-0428-022, MNT-0577-028, supplier-recall-notice-2026-12-01
 
@@ -226,7 +226,7 @@
 - WELL-0333: counted as replaced on the word of Nathan Pierce (LDG-0001, 2027-01-15); work order not yet in the maintenance system
 - Shown with your saved preferences (sorted by area then well ID; costs in thousands of dollars). These apply only to you.
 
-*Visual:* table · *Plan:* `[{"operation": "recalled_pumps"}]` · *2.9s*
+*Visual:* table · *Plan:* `[{"operation": "recalled_pumps"}]` · *2.7s*
 
 *Evidence:* MNT-0305-032, MNT-0426-030, MNT-0428-022, supplier-recall-notice-2026-12-01
 
@@ -249,7 +249,7 @@
 **Shared knowledge from other users:**
 - WELL-0577: Olivia Grant said "Nathan told me the recalled pump on WELL-0577 was swapped as well. Take it off the recall list." (LDG-0004, unconfirmed)
 
-*Visual:* table · *Plan:* `[{"operation": "recalled_pumps"}]` · *0.3s*
+*Visual:* table · *Plan:* `[{"operation": "recalled_pumps"}]` · *0.2s*
 
 *Evidence:* MNT-0031-027, MNT-0156-027, MNT-0160-028, MNT-0263-033, MNT-0305-032, MNT-0426-030, MNT-0428-022, MNT-0577-028, supplier-recall-notice-2026-12-01
 
@@ -311,7 +311,7 @@
 - I would deal with WELL-0160 first: recalled pump lot LOT-2409-C still in the ground, past the 31 Dec 2026 deadline; not producing at the latest inspection.
 - Judgement across the 12 wells discussed in this session. Safety first (gas/H2S response missed), then the overdue recalled pump (a cracked plunger can make the pump much harder to pull), then lost production, then approvals.
 
-*Visual:* table · *Plan:* `[{"operation": "priority", "wells": ["WELL-0156", "WELL-0160", "WELL-0305", "WELL-0426", "WELL-0428", "WELL-0577", "WELL-0031", "WELL-0263"]}]` · *1.4s*
+*Visual:* table · *Plan:* `[{"operation": "priority", "wells": ["WELL-0156", "WELL-0160", "WELL-0305", "WELL-0426", "WELL-0428", "WELL-0577", "WELL-0031", "WELL-0263"]}]` · *1.6s*
 
 *Evidence:* INS-0031-0215, INS-0156-0217, INS-0160-0217, INS-0263-0219, INS-0305-0216, MNT-0031-027, MNT-0156-027, MNT-0160-028, MNT-0263-033, MNT-0305-032, supplier-recall-notice-2026-12-01
 
@@ -331,7 +331,7 @@
 - No contractor or crew delays are recorded in the notes for 2026; the only delay reasons the data records are weather and waiting for parts, so those are the only two that can be reported.
 - Method: extra days from operator/maintenance notes that explain the delay (their validity window), else from weekly inspections still not producing after the job finished. Reason from note wording.
 
-*Visual:* stacked · *Plan:* `[{"operation": "waiting_reasons"}]` · *7.8s*
+*Visual:* stacked · *Plan:* `[{"operation": "waiting_reasons"}]` · *7.3s*
 
 *Evidence:* MNT-0002-018, MNT-0020-033, MNT-0020-034, MNT-0045-025, MNT-0045-026, MNT-0072-028, MNT-0072-029, MNT-0078-022, MNT-0116-012, MNT-0133-020, MNT-0199-025, MNT-0209-019, MNT-0216-034, MNT-0217-019, MNT-0217-020, MNT-0226-025, MNT-0227-021, MNT-0241-028, MNT-0258-027, MNT-0273-015, MNT-0338-023, MNT-0366-026, MNT-0369-027, MNT-0380-028, MNT-0380-029, MNT-0414-028, MNT-0448-024, MNT-0461-022, MNT-0463-020, MNT-0492-013, MNT-0510-031, MNT-0510-032, MNT-0515-019, MNT-0520-026, MNT-0588-022
 
@@ -348,9 +348,9 @@
 - Area: Southwest Block 24; 2026-01: 26.8; 2026-02: 26.8; 2026-03: 26.8; 2026-04: 26.6; 2026-05: 26.6; 2026-06: 27.0; 2026-07: 26.4; 2026-08: 26.3; 2026-09: 26.2; 2026-10: 27.1; 2026-11: 26.5; 2026-12: 26.5; 2027-01: 26.5; Avg above air: 26.6
 - Southeast Block 31 runs hottest: on average 31.5 °C above air, highest in 13 of 13 months (last 12 months).
 - Air temperature is similar across areas (21.6–21.8 °C average), so this is the wellheads, not the weather.
-- Caution: well types differ (manuals: T200 limit 15 °C, T350 20 °C, T500 25 °C; deeper types run hotter). Type mix per area: Northeast Block 7: 1 T500, 28 T350, 33 T200; Northeast Block 8: 1 T500, 23 T350, 38 T200; Northwest Block 12: 34 T500, 45 T350, 71 T200; Southeast Block 31: 29 T500, 7 T350, 14 T200; Southeast Block 32: 37 T500, 51 T350, 62 T200; Southwest Block 23: 4 T500, 24 T350, 35 T200; Southwest Block 24: 0 T500, 23 T350, 40 T200.
-- Within the same type, area averages: T500: Northeast Block 7 35.9, Northeast Block 8 36.7, Northwest Block 12 34.3, Southeast Block 31 35.1, Southeast Block 32 34.5, Southwest Block 23 35.3; T350: Northeast Block 7 29.4, Northeast Block 8 29.6, Northwest Block 12 29.4, Southeast Block 31 30.4, Southeast Block 32 29.7, Southwest Block 23 29.5, Southwest Block 24 29.6; T200: Northeast Block 7 24.8, Northeast Block 8 24.2, Northwest Block 12 24.7, Southeast Block 31 24.4, Southeast Block 32 24.7, Southwest Block 23 24.3, Southwest Block 24 24.9.
+- Caution: well types differ (manuals: T200 limit 15 °C, T350 20 °C, T500 25 °C; deeper types run hotter). Type mix per area: Northeast Block 7: 1 T500, 28 T350, 33 T200; Northeast Block 8: 1 T500, 23 T350, 38 T200; Northwest Block 12: 34 T500, 45 T350, 71 T200; Southeast Block 31: 29 T500, 7 T350, 14 T200; Southeast Block 32: 37 T500, 51 T350, 62 T200; Southwest Block 23: 4 T500, 23 T350, 36 T200; Southwest Block 24: 0 T500, 23 T350, 40 T200.
+- Within the same type, area averages: T500: Northeast Block 7 35.9, Northeast Block 8 36.7, Northwest Block 12 34.3, Southeast Block 31 35.1, Southeast Block 32 34.5, Southwest Block 23 35.3; T350: Northeast Block 7 29.4, Northeast Block 8 29.6, Northwest Block 12 29.4, Southeast Block 31 30.4, Southeast Block 32 29.7, Southwest Block 23 29.7, Southwest Block 24 29.6; T200: Northeast Block 7 24.8, Northeast Block 8 24.2, Northwest Block 12 24.7, Southeast Block 31 24.4, Southeast Block 32 24.7, Southwest Block 23 24.3, Southwest Block 24 24.9.
 
-*Visual:* heatmap · *Plan:* `[{"operation": "temp_by_area"}]` · *0.4s*
+*Visual:* heatmap · *Plan:* `[{"operation": "temp_by_area"}]` · *0.3s*
 
 *Evidence:* INS-0201-0218, INS-0202-0214, INS-0208-0010, INS-0213-0221, INS-0226-0216, INS-0230-0219, INS-0245-0215, INS-0250-0153, T200 9.3 Production temperature rule, T350 3. Production temperature rule, T500 3. Production temperature rule

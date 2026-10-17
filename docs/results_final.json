@@ -53,9 +53,9 @@
      ]
     }
    ],
-   "ms": 2684
+   "ms": 2526
   },
-  "secs": 2.6940388679504395
+  "secs": 2.537078380584717
  },
  {
   "item": {
@@ -225,9 +225,9 @@
      ]
     }
    ],
-   "ms": 115
+   "ms": 121
   },
-  "secs": 0.12627220153808594
+  "secs": 0.1306753158569336
  },
  {
   "item": {
@@ -808,9 +808,9 @@
      ]
     }
    ],
-   "ms": 699
+   "ms": 721
   },
-  "secs": 0.713651180267334
+  "secs": 0.7313175201416016
  },
  {
   "item": {
@@ -1141,9 +1141,9 @@
      ]
     }
    ],
-   "ms": 258
+   "ms": 301
   },
-  "secs": 0.26882100105285645
+  "secs": 0.31285810470581055
  },
  {
   "item": {
@@ -1314,9 +1314,9 @@
      ]
     }
    ],
-   "ms": 105
+   "ms": 102
   },
-  "secs": 0.11548662185668945
+  "secs": 0.11240577697753906
  },
  {
   "item": {
@@ -1608,9 +1608,9 @@
      ]
     }
    ],
-   "ms": 1603
+   "ms": 1541
   },
-  "secs": 1.614433765411377
+  "secs": 1.5510289669036865
  },
  {
   "item": {
@@ -2759,9 +2759,9 @@
      ]
     }
    ],
-   "ms": 3989
+   "ms": 3820
   },
-  "secs": 4.001978635787964
+  "secs": 3.8306174278259277
  },
  {
   "item": {
@@ -3841,9 +3841,9 @@
      ]
     }
    ],
-   "ms": 3954
+   "ms": 3778
   },
-  "secs": 3.9656426906585693
+  "secs": 3.788475751876831
  },
  {
   "item": {
@@ -3917,9 +3917,9 @@
      ]
     }
    ],
-   "ms": 224
+   "ms": 216
   },
-  "secs": 0.23388075828552246
+  "secs": 0.22925567626953125
  },
  {
   "item": {
@@ -3986,9 +3986,9 @@
      ]
     }
    ],
-   "ms": 2598
+   "ms": 2446
   },
-  "secs": 2.607556104660034
+  "secs": 2.455085515975952
  },
  {
   "item": {
@@ -4193,9 +4193,9 @@
      ]
     }
    ],
-   "ms": 2835
+   "ms": 2667
   },
-  "secs": 2.8458194732666016
+  "secs": 2.6774868965148926
  },
  {
   "item": {
@@ -4277,9 +4277,9 @@
      ]
     }
    ],
-   "ms": 256
+   "ms": 241
   },
-  "secs": 0.266585111618042
+  "secs": 0.25078558921813965
  },
  {
   "item": {
@@ -4397,9 +4397,9 @@
      ]
     }
    ],
-   "ms": 2875
+   "ms": 2660
   },
-  "secs": 2.884502649307251
+  "secs": 2.669706344604492
  },
  {
   "item": {
@@ -4605,9 +4605,9 @@
      ]
     }
    ],
-   "ms": 282
+   "ms": 233
   },
-  "secs": 0.2926971912384033
+  "secs": 0.2431333065032959
  },
  {
   "item": {
@@ -4662,9 +4662,9 @@
      ]
     }
    ],
-   "ms": 114
+   "ms": 97
   },
-  "secs": 0.12387728691101074
+  "secs": 0.10740494728088379
  },
  {
   "item": {
@@ -4774,9 +4774,9 @@
      ]
     }
    ],
-   "ms": 207
+   "ms": 217
   },
-  "secs": 0.21831464767456055
+  "secs": 0.22654414176940918
  },
  {
   "item": {
@@ -4827,9 +4827,9 @@
      ]
     }
    ],
-   "ms": 101
+   "ms": 111
   },
-  "secs": 0.11329793930053711
+  "secs": 0.1210935115814209
  },
  {
   "item": {
@@ -4924,9 +4924,9 @@
      ]
     }
    ],
-   "ms": 283
+   "ms": 257
   },
-  "secs": 0.2921891212463379
+  "secs": 0.26688623428344727
  },
  {
   "item": {
@@ -5070,9 +5070,9 @@
      ]
     }
    ],
-   "ms": 1420
+   "ms": 1557
   },
-  "secs": 1.4306650161743164
+  "secs": 1.5680210590362549
  },
  {
   "item": {
@@ -5430,9 +5430,9 @@
      ]
     }
    ],
-   "ms": 7809
+   "ms": 7280
   },
-  "secs": 7.823275804519653
+  "secs": 7.290815591812134
  },
  {
   "item": {
@@ -5443,8 +5443,8 @@
    "question": "Which region of the field consistently runs hotter?"
   },
   "answer": {
-   "text": "**Southeast Block 31 runs hottest.**\n- Southeast Block 31 runs hottest: on average 31.5 \u00b0C above air, highest in 13 of 13 months (last 12 months).\n- Air temperature is similar across areas (21.6\u201321.8 \u00b0C average), so this is the wellheads, not the weather.\n- Caution: well types differ (manuals: T200 limit 15 \u00b0C, T350 20 \u00b0C, T500 25 \u00b0C; deeper types run hotter). Type mix per area: Northeast Block 7: 1 T500, 28 T350, 33 T200; Northeast Block 8: 1 T500, 23 T350, 38 T200; Northwest Block 12: 34 T500, 45 T350, 71 T200; Southeast Block 31: 29 T500, 7 T350, 14 T200; Southeast Block 32: 37 T500, 51 T350, 62 T200; Southwest Block 23: 4 T500, 24 T350, 35 T200; Southwest Block 24: 0 T500, 23 T350, 40 T200.\n- Within the same type, area averages: T500: Northeast Block 7 35.9, Northeast Block 8 36.7, Northwest Block 12 34.3, Southeast Block 31 35.1, Southeast Block 32 34.5, Southwest Block 23 35.3; T350: Northeast Block 7 29.4, Northeast Block 8 29.6, Northwest Block 12 29.4, Southeast Block 31 30.4, Southeast Block 32 29.7, Southwest Block 23 29.5, Southwest Block 24 29.6; T200: Northeast Block 7 24.8, Northeast Block 8 24.2, Northwest Block 12 24.7, Southeast Block 31 24.4, Southeast Block 32 24.7, Southwest Block 23 24.3, Southwest Block 24 24.9.",
-   "full_text": "**Southeast Block 31 runs hottest.**\n- Area: Northeast Block 7; 2026-01: 27.6; 2026-02: 27.6; 2026-03: 26.7; 2026-04: 27.3; 2026-05: 26.6; 2026-06: 27.3; 2026-07: 27.2; 2026-08: 26.9; 2026-09: 27.0; 2026-10: 26.7; 2026-11: 27.2; 2026-12: 27.0; 2027-01: 26.4; Avg above air: 27.1\n- Area: Northeast Block 8; 2026-01: 26.6; 2026-02: 26.2; 2026-03: 26.4; 2026-04: 26.7; 2026-05: 27.2; 2026-06: 26.8; 2026-07: 27.2; 2026-08: 26.4; 2026-09: 26.9; 2026-10: 27.0; 2026-11: 25.8; 2026-12: 24.5; 2027-01: 25.3; Avg above air: 26.4\n- Area: Northwest Block 12; 2026-01: 29.0; 2026-02: 28.2; 2026-03: 28.6; 2026-04: 28.3; 2026-05: 27.7; 2026-06: 27.8; 2026-07: 28.7; 2026-08: 28.8; 2026-09: 27.7; 2026-10: 28.7; 2026-11: 28.1; 2026-12: 27.8; 2027-01: 28.0; Avg above air: 28.3\n- Area: Southeast Block 31; 2026-01: 31.2; 2026-02: 31.1; 2026-03: 30.6; 2026-04: 31.2; 2026-05: 31.8; 2026-06: 31.3; 2026-07: 32.6; 2026-08: 32.1; 2026-09: 30.5; 2026-10: 32.3; 2026-11: 32.1; 2026-12: 31.1; 2027-01: 30.2; Avg above air: 31.5\n- Area: Southeast Block 32; 2026-01: 28.6; 2026-02: 29.1; 2026-03: 29.3; 2026-04: 28.8; 2026-05: 28.1; 2026-06: 28.9; 2026-07: 28.4; 2026-08: 29.7; 2026-09: 28.3; 2026-10: 29.5; 2026-11: 29.1; 2026-12: 28.4; 2027-01: 27.8; Avg above air: 28.8\n- Area: Southwest Block 23; 2026-01: 27.8; 2026-02: 26.6; 2026-03: 26.8; 2026-04: 26.8; 2026-05: 26.7; 2026-06: 26.8; 2026-07: 27.4; 2026-08: 27.4; 2026-09: 27.1; 2026-10: 27.7; 2026-11: 27.2; 2026-12: 26.6; 2027-01: 24.9; Avg above air: 27.0\n- Area: Southwest Block 24; 2026-01: 26.8; 2026-02: 26.8; 2026-03: 26.8; 2026-04: 26.6; 2026-05: 26.6; 2026-06: 27.0; 2026-07: 26.4; 2026-08: 26.3; 2026-09: 26.2; 2026-10: 27.1; 2026-11: 26.5; 2026-12: 26.5; 2027-01: 26.5; Avg above air: 26.6\n- Southeast Block 31 runs hottest: on average 31.5 \u00b0C above air, highest in 13 of 13 months (last 12 months).\n- Air temperature is similar across areas (21.6\u201321.8 \u00b0C average), so this is the wellheads, not the weather.\n- Caution: well types differ (manuals: T200 limit 15 \u00b0C, T350 20 \u00b0C, T500 25 \u00b0C; deeper types run hotter). Type mix per area: Northeast Block 7: 1 T500, 28 T350, 33 T200; Northeast Block 8: 1 T500, 23 T350, 38 T200; Northwest Block 12: 34 T500, 45 T350, 71 T200; Southeast Block 31: 29 T500, 7 T350, 14 T200; Southeast Block 32: 37 T500, 51 T350, 62 T200; Southwest Block 23: 4 T500, 24 T350, 35 T200; Southwest Block 24: 0 T500, 23 T350, 40 T200.\n- Within the same type, area averages: T500: Northeast Block 7 35.9, Northeast Block 8 36.7, Northwest Block 12 34.3, Southeast Block 31 35.1, Southeast Block 32 34.5, Southwest Block 23 35.3; T350: Northeast Block 7 29.4, Northeast Block 8 29.6, Northwest Block 12 29.4, Southeast Block 31 30.4, Southeast Block 32 29.7, Southwest Block 23 29.5, Southwest Block 24 29.6; T200: Northeast Block 7 24.8, Northeast Block 8 24.2, Northwest Block 12 24.7, Southeast Block 31 24.4, Southeast Block 32 24.7, Southwest Block 23 24.3, Southwest Block 24 24.9.",
+   "text": "**Southeast Block 31 runs hottest.**\n- Southeast Block 31 runs hottest: on average 31.5 \u00b0C above air, highest in 13 of 13 months (last 12 months).\n- Air temperature is similar across areas (21.6\u201321.8 \u00b0C average), so this is the wellheads, not the weather.\n- Caution: well types differ (manuals: T200 limit 15 \u00b0C, T350 20 \u00b0C, T500 25 \u00b0C; deeper types run hotter). Type mix per area: Northeast Block 7: 1 T500, 28 T350, 33 T200; Northeast Block 8: 1 T500, 23 T350, 38 T200; Northwest Block 12: 34 T500, 45 T350, 71 T200; Southeast Block 31: 29 T500, 7 T350, 14 T200; Southeast Block 32: 37 T500, 51 T350, 62 T200; Southwest Block 23: 4 T500, 23 T350, 36 T200; Southwest Block 24: 0 T500, 23 T350, 40 T200.\n- Within the same type, area averages: T500: Northeast Block 7 35.9, Northeast Block 8 36.7, Northwest Block 12 34.3, Southeast Block 31 35.1, Southeast Block 32 34.5, Southwest Block 23 35.3; T350: Northeast Block 7 29.4, Northeast Block 8 29.6, Northwest Block 12 29.4, Southeast Block 31 30.4, Southeast Block 32 29.7, Southwest Block 23 29.7, Southwest Block 24 29.6; T200: Northeast Block 7 24.8, Northeast Block 8 24.2, Northwest Block 12 24.7, Southeast Block 31 24.4, Southeast Block 32 24.7, Southwest Block 23 24.3, Southwest Block 24 24.9.",
+   "full_text": "**Southeast Block 31 runs hottest.**\n- Area: Northeast Block 7; 2026-01: 27.6; 2026-02: 27.6; 2026-03: 26.7; 2026-04: 27.3; 2026-05: 26.6; 2026-06: 27.3; 2026-07: 27.2; 2026-08: 26.9; 2026-09: 27.0; 2026-10: 26.7; 2026-11: 27.2; 2026-12: 27.0; 2027-01: 26.4; Avg above air: 27.1\n- Area: Northeast Block 8; 2026-01: 26.6; 2026-02: 26.2; 2026-03: 26.4; 2026-04: 26.7; 2026-05: 27.2; 2026-06: 26.8; 2026-07: 27.2; 2026-08: 26.4; 2026-09: 26.9; 2026-10: 27.0; 2026-11: 25.8; 2026-12: 24.5; 2027-01: 25.3; Avg above air: 26.4\n- Area: Northwest Block 12; 2026-01: 29.0; 2026-02: 28.2; 2026-03: 28.6; 2026-04: 28.3; 2026-05: 27.7; 2026-06: 27.8; 2026-07: 28.7; 2026-08: 28.8; 2026-09: 27.7; 2026-10: 28.7; 2026-11: 28.1; 2026-12: 27.8; 2027-01: 28.0; Avg above air: 28.3\n- Area: Southeast Block 31; 2026-01: 31.2; 2026-02: 31.1; 2026-03: 30.6; 2026-04: 31.2; 2026-05: 31.8; 2026-06: 31.3; 2026-07: 32.6; 2026-08: 32.1; 2026-09: 30.5; 2026-10: 32.3; 2026-11: 32.1; 2026-12: 31.1; 2027-01: 30.2; Avg above air: 31.5\n- Area: Southeast Block 32; 2026-01: 28.6; 2026-02: 29.1; 2026-03: 29.3; 2026-04: 28.8; 2026-05: 28.1; 2026-06: 28.9; 2026-07: 28.4; 2026-08: 29.7; 2026-09: 28.3; 2026-10: 29.5; 2026-11: 29.1; 2026-12: 28.4; 2027-01: 27.8; Avg above air: 28.8\n- Area: Southwest Block 23; 2026-01: 27.8; 2026-02: 26.6; 2026-03: 26.8; 2026-04: 26.8; 2026-05: 26.7; 2026-06: 26.8; 2026-07: 27.4; 2026-08: 27.4; 2026-09: 27.1; 2026-10: 27.7; 2026-11: 27.2; 2026-12: 26.6; 2027-01: 24.9; Avg above air: 27.0\n- Area: Southwest Block 24; 2026-01: 26.8; 2026-02: 26.8; 2026-03: 26.8; 2026-04: 26.6; 2026-05: 26.6; 2026-06: 27.0; 2026-07: 26.4; 2026-08: 26.3; 2026-09: 26.2; 2026-10: 27.1; 2026-11: 26.5; 2026-12: 26.5; 2027-01: 26.5; Avg above air: 26.6\n- Southeast Block 31 runs hottest: on average 31.5 \u00b0C above air, highest in 13 of 13 months (last 12 months).\n- Air temperature is similar across areas (21.6\u201321.8 \u00b0C average), so this is the wellheads, not the weather.\n- Caution: well types differ (manuals: T200 limit 15 \u00b0C, T350 20 \u00b0C, T500 25 \u00b0C; deeper types run hotter). Type mix per area: Northeast Block 7: 1 T500, 28 T350, 33 T200; Northeast Block 8: 1 T500, 23 T350, 38 T200; Northwest Block 12: 34 T500, 45 T350, 71 T200; Southeast Block 31: 29 T500, 7 T350, 14 T200; Southeast Block 32: 37 T500, 51 T350, 62 T200; Southwest Block 23: 4 T500, 23 T350, 36 T200; Southwest Block 24: 0 T500, 23 T350, 40 T200.\n- Within the same type, area averages: T500: Northeast Block 7 35.9, Northeast Block 8 36.7, Northwest Block 12 34.3, Southeast Block 31 35.1, Southeast Block 32 34.5, Southwest Block 23 35.3; T350: Northeast Block 7 29.4, Northeast Block 8 29.6, Northwest Block 12 29.4, Southeast Block 31 30.4, Southeast Block 32 29.7, Southwest Block 23 29.7, Southwest Block 24 29.6; T200: Northeast Block 7 24.8, Northeast Block 8 24.2, Northwest Block 12 24.7, Southeast Block 31 24.4, Southeast Block 32 24.7, Southwest Block 23 24.3, Southwest Block 24 24.9.",
    "plan": {
     "intent": "query",
     "steps": [
@@ -5684,13 +5684,13 @@
      "notes": [
       "Southeast Block 31 runs hottest: on average 31.5 \u00b0C above air, highest in 13 of 13 months (last 12 months).",
       "Air temperature is similar across areas (21.6\u201321.8 \u00b0C average), so this is the wellheads, not the weather.",
-      "Caution: well types differ (manuals: T200 limit 15 \u00b0C, T350 20 \u00b0C, T500 25 \u00b0C; deeper types run hotter). Type mix per area: Northeast Block 7: 1 T500, 28 T350, 33 T200; Northeast Block 8: 1 T500, 23 T350, 38 T200; Northwest Block 12: 34 T500, 45 T350, 71 T200; Southeast Block 31: 29 T500, 7 T350, 14 T200; Southeast Block 32: 37 T500, 51 T350, 62 T200; Southwest Block 23: 4 T500, 24 T350, 35 T200; Southwest Block 24: 0 T500, 23 T350, 40 T200.",
-      "Within the same type, area averages: T500: Northeast Block 7 35.9, Northeast Block 8 36.7, Northwest Block 12 34.3, Southeast Block 31 35.1, Southeast Block 32 34.5, Southwest Block 23 35.3; T350: Northeast Block 7 29.4, Northeast Block 8 29.6, Northwest Block 12 29.4, Southeast Block 31 30.4, Southeast Block 32 29.7, Southwest Block 23 29.5, Southwest Block 24 29.6; T200: Northeast Block 7 24.8, Northeast Block 8 24.2, Northwest Block 12 24.7, Southeast Block 31 24.4, Southeast Block 32 24.7, Southwest Block 23 24.3, Southwest Block 24 24.9."
+      "Caution: well types differ (manuals: T200 limit 15 \u00b0C, T350 20 \u00b0C, T500 25 \u00b0C; deeper types run hotter). Type mix per area: Northeast Block 7: 1 T500, 28 T350, 33 T200; Northeast Block 8: 1 T500, 23 T350, 38 T200; Northwest Block 12: 34 T500, 45 T350, 71 T200; Southeast Block 31: 29 T500, 7 T350, 14 T200; Southeast Block 32: 37 T500, 51 T350, 62 T200; Southwest Block 23: 4 T500, 23 T350, 36 T200; Southwest Block 24: 0 T500, 23 T350, 40 T200.",
+      "Within the same type, area averages: T500: Northeast Block 7 35.9, Northeast Block 8 36.7, Northwest Block 12 34.3, Southeast Block 31 35.1, Southeast Block 32 34.5, Southwest Block 23 35.3; T350: Northeast Block 7 29.4, Northeast Block 8 29.6, Northwest Block 12 29.4, Southeast Block 31 30.4, Southeast Block 32 29.7, Southwest Block 23 29.7, Southwest Block 24 29.6; T200: Northeast Block 7 24.8, Northeast Block 8 24.2, Northwest Block 12 24.7, Southeast Block 31 24.4, Southeast Block 32 24.7, Southwest Block 23 24.3, Southwest Block 24 24.9."
      ]
     }
    ],
-   "ms": 337
+   "ms": 278
   },
-  "secs": 0.350217342376709
+  "secs": 0.290053129196167
  }
 ]
